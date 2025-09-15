@@ -45,48 +45,123 @@ Local Chat (Qwen2.5‑Coder 14B)
 
         Detailed problem‑solving.
 
-Prompt Library — AI Assistant Project
+PPrompt Library — AI Assistant Project
+
 General Development
 
-Explain Code Explain the following code in simple terms, including its purpose, inputs, outputs, and any potential pitfalls: {{selection}}
+📝 Explain Code
 
-Refactor for Readability Refactor the following code for clarity, maintainability, and performance without changing functionality: {{selection}}
+Purpose: Break down a code snippet into plain language, covering purpose, inputs, outputs, and pitfalls.
 
-Suggest Improvements Suggest small, incremental improvements for this code, focusing on efficiency, readability, and scalability: {{selection}}
+Explain the following code in simple terms, including its purpose, inputs, outputs, and any potential pitfalls:
+{{selection}}
+
+🔄 Refactor for Readability
+
+Purpose: Improve clarity, maintainability, and performance without changing functionality.
+
+Refactor the following code for clarity, maintainability, and performance without changing functionality:
+{{selection}}
+
+💡 Suggest Improvements
+
+Purpose: Recommend small, incremental enhancements for efficiency, readability, and scalability.
+
+Suggest small, incremental improvements for this code, focusing on efficiency, readability, and scalability:
+{{selection}}
+
 Architecture & Design
 
-Design AI Assistant Module Design a modular architecture for an AI assistant that can handle the following features: {{input}} Include data flow, API boundaries, and component responsibilities.
+🏗 Design AI Assistant Module
 
-Integration Plan Given the following existing system, outline how to integrate an AI assistant component with minimal disruption: {{files}}
+Purpose: Create a modular architecture plan for new features.
 
-Feature Breakdown Break down the following feature request into actionable development tasks for an AI assistant project: {{input}}
+Design a modular architecture for an AI assistant that can handle the following features:
+{{input}}
+Include data flow, API boundaries, and component responsibilities.
+
+🔌 Integration Plan
+
+Purpose: Plan how to integrate an AI assistant into an existing system.
+
+Given the following existing system, outline how to integrate an AI assistant component with minimal disruption:
+{{files}}
+
+📋 Feature Breakdown
+
+Purpose: Turn a feature request into actionable development tasks.
+
+Break down the following feature request into actionable development tasks for an AI assistant project:
+{{input}}
+
 Testing & Validation
 
-Generate Unit Tests Write comprehensive unit tests for the following function, covering edge cases and error handling: {{selection}}
+🧪 Generate Unit Tests
 
-Test Plan Create a test plan for validating the AI assistant's responses against functional and UX requirements: {{input}}
+Purpose: Write comprehensive tests for a function, including edge cases.
 
-Debugging Aid Analyze the following code and describe potential causes for the reported bug, along with possible fixes: {{selection}}
+Write comprehensive unit tests for the following function, covering edge cases and error handling:
+{{selection}}
+
+✅ Test Plan
+
+Purpose: Define a plan to validate AI assistant responses against requirements.
+
+Create a test plan for validating the AI assistant's responses against functional and UX requirements:
+{{input}}
+
+🐞 Debugging Aid
+
+Purpose: Identify possible causes and fixes for a bug.
+
+Analyze the following code and describe potential causes for the reported bug, along with possible fixes:
+{{selection}}
+
 Prompt Engineering
 
-Refine Prompt Given the following initial prompt for the AI assistant, refine it for clarity, specificity, and optimal model performance: {{input}}
+✏️ Refine Prompt
 
-Prompt Variations Generate 3 alternative phrasings of the following prompt that might yield better results from the model: {{input}}
+Purpose: Improve clarity, specificity, and performance of an AI prompt.
 
-Response Evaluation Evaluate the following AI assistant response for accuracy, helpfulness, and tone. Suggest improvements: {{input}}
+Given the following initial prompt for the AI assistant, refine it for clarity, specificity, and optimal model performance:
+{{input}}
+
+🎯 Prompt Variations
+
+Purpose: Generate alternative phrasings to improve model output.
+
+Generate 3 alternative phrasings of the following prompt that might yield better results from the model:
+{{input}}
+
+🔍 Response Evaluation
+
+Purpose: Assess and improve an AI assistant’s response.
+
+Evaluate the following AI assistant response for accuracy, helpfulness, and tone. Suggest improvements:
+{{input}}
+
 User Experience
 
-Conversation Flow Design a conversation flow for the AI assistant to guide a user through: {{input}} Include fallback responses and clarification prompts.
+🗣 Conversation Flow
 
-Tone & Style Guide Create a tone and style guide for the AI assistant to ensure consistent, engaging, and brand‑aligned responses: {{input}}
+Purpose: Map out a guided conversation with fallback options.
 
-Error Handling UX Suggest user‑friendly error messages and recovery strategies for the AI assistant when it cannot fulfill a request: {{input}}
-Usage Tips
+Design a conversation flow for the AI assistant to guide a user through:
+{{input}}
+Include fallback responses and clarification prompts.
 
-    7B: Use for quick iterations on prompts, small code snippets, and lightweight design brainstorming.
+🎨 Tone & Style Guide
 
-    14B: Use for deep architectural planning, multi‑file reviews, and complex debugging.
+Purpose: Define the assistant’s personality and communication style.
 
-    Copilot: Let it handle inline completions and micro‑suggestions while coding.
+Create a tone and style guide for the AI assistant to ensure consistent, engaging, and brand‑aligned responses:
+{{input}}
 
-    Keep these prompts in a Continue Page or local reference file for quick copy‑paste into the chat input.
+🚧 Error Handling UX
+
+Purpose: Provide user‑friendly error messages and recovery strategies.
+
+Suggest user‑friendly error messages and recovery strategies for the AI assistant when it cannot fulfill a request:
+{{input}}
+
+I
