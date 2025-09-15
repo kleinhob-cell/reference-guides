@@ -11,11 +11,11 @@ Copilot
 
     Best For:
 
-        Filling in code as you type.
+        Filling in code as you type
 
-        Quick syntax fixes.
+        Quick syntax fixes
 
-        Short, context‑aware suggestions.
+        Short, context‑aware suggestions
 
 Local Chat (Qwen2.5‑Coder 7B)
 
@@ -25,11 +25,11 @@ Local Chat (Qwen2.5‑Coder 7B)
 
     Best For:
 
-        Explaining code snippets.
+        Explaining code snippets
 
-        Suggesting small improvements.
+        Suggesting small improvements
 
-        Quick brainstorming without heavy compute.
+        Quick brainstorming without heavy compute
 
 Local Chat (Qwen2.5‑Coder 14B)
 
@@ -39,11 +39,11 @@ Local Chat (Qwen2.5‑Coder 14B)
 
     Best For:
 
-        Reviewing multiple files or large codebases.
+        Reviewing multiple files or large codebases
 
-        Designing architecture or workflows.
+        Designing architecture or workflows
 
-        Detailed problem‑solving.
+        Detailed problem‑solving
 
 PPrompt Library — AI Assistant Project
 
