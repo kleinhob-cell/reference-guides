@@ -2,7 +2,7 @@
 
 | Description | Command |
 |-------------|---------|
-| Print working directory | ~~~bash<br>pwd<br>~~~ |
+| Print working directory | ~~~bash pwd ~~~ |
 | List files in the current directory | ~~~bash<br>ls<br>~~~ |
 | List all files, including hidden, with details | ~~~bash<br>ls -la<br>~~~ |
 | Change directory | ~~~bash<br>cd <dir><br>~~~ |
