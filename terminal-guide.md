@@ -1,104 +1,411 @@
+# Ubuntu Terminal Guide
+
+A quick reference for common and advanced Ubuntu terminal commands.
+
+---
+
 # 📂 Navigation
 
 | Description | Command |
 |-------------|---------|
-| Print working directory | ~~~bash pwd ~~~ |
-| List files in the current directory | ~~~bash<br>ls<br>~~~ |
-| List all files, including hidden, with details | ~~~bash<br>ls -la<br>~~~ |
-| Change directory | ~~~bash<br>cd <dir><br>~~~ |
-| Go up one directory | ~~~bash<br>cd ..<br>~~~ |
-| Go to your home directory | ~~~bash<br>cd ~<br>~~~ |
+| Print working directory | `pwd` |
+| List files in the current directory | `ls` |
+| List all files, including hidden, with details | `ls -la` |
+| Change directory | `cd <dir>` |
+| Go up one directory | `cd ..` |
+| Go to your home directory | `cd ~` |
+
+### Print working directory
+~~~bash
+pwd
+~~~
+
+### List files in the current directory
+~~~bash
+ls
+~~~
+
+### List all files, including hidden, with details
+~~~bash
+ls -la
+~~~
+
+### Change directory
+~~~bash
+cd <dir>
+~~~
+
+### Go up one directory
+~~~bash
+cd ..
+~~~
+
+### Go to your home directory
+~~~bash
+cd ~
+~~~
 
 # 📄 File & Directory Management
 
 | Description | Command |
 |-------------|---------|
-| Create an empty file | ~~~bash<br>touch file.txt<br>~~~ |
-| Create a new directory | ~~~bash<br>mkdir myfolder<br>~~~ |
-| Copy a file | ~~~bash<br>cp file1 file2<br>~~~ |
-| Copy a directory recursively | ~~~bash<br>cp -r dir1 dir2<br>~~~ |
-| Move or rename a file/directory | ~~~bash<br>mv oldname newname<br>~~~ |
-| Remove a file | ~~~bash<br>rm file.txt<br>~~~ |
-| Remove a directory and its contents | ~~~bash<br>rm -r folder<br>~~~ |
+| Create an empty file | `touch file.txt` |
+| Create a new directory | `mkdir myfolder` |
+| Copy a file | `cp file1 file2` |
+| Copy a directory recursively | `cp -r dir1 dir2` |
+| Move or rename a file/directory | `mv oldname newname` |
+| Remove a file | `rm file.txt` |
+| Remove a directory and its contents | `rm -r folder` |
+
+### Create an empty file
+~~~bash
+touch file.txt
+~~~
+
+### Create a new directory
+~~~bash
+mkdir myfolder
+~~~
+
+### Copy a file
+~~~bash
+cp file1 file2
+~~~
+
+### Copy a directory recursively
+~~~bash
+cp -r dir1 dir2
+~~~
+
+### Move or rename a file/directory
+~~~bash
+mv oldname newname
+~~~
+
+### Remove a file
+~~~bash
+rm file.txt
+~~~
+
+### Remove a directory and its contents
+~~~bash
+rm -r folder
+~~~
 
 # 📦 Package Management (APT)
 
 | Description | Command |
 |-------------|---------|
-| Refresh package lists | ~~~bash<br>sudo apt update<br>~~~ |
-| Upgrade all upgradable packages | ~~~bash<br>sudo apt upgrade<br>~~~ |
-| Install a package | ~~~bash<br>sudo apt install <package><br>~~~ |
-| Remove a package | ~~~bash<br>sudo apt remove <package><br>~~~ |
-| Search for a package | ~~~bash<br>sudo apt search <term><br>~~~ |
+| Refresh package lists | `sudo apt update` |
+| Upgrade all upgradable packages | `sudo apt upgrade` |
+| Install a package | `sudo apt install <package>` |
+| Remove a package | `sudo apt remove <package>` |
+| Search for a package | `sudo apt search <term>` |
+
+### Refresh package lists
+~~~bash
+sudo apt update
+~~~
+
+### Upgrade all upgradable packages
+~~~bash
+sudo apt upgrade
+~~~
+
+### Install a package
+~~~bash
+sudo apt install <package>
+~~~
+
+### Remove a package
+~~~bash
+sudo apt remove <package>
+~~~
+
+### Search for a package
+~~~bash
+sudo apt search <term>
+~~~
 
 # 🔍 File Viewing & Editing
 
 | Description | Command |
 |-------------|---------|
-| View file contents | ~~~bash<br>cat file.txt<br>~~~ |
-| View file with scroll support | ~~~bash<br>less file.txt<br>~~~ |
-| Edit file in Nano editor | ~~~bash<br>nano file.txt<br>~~~ |
-| Edit file in Vim editor | ~~~bash<br>vim file.txt<br>~~~ |
+| View file contents | `cat file.txt` |
+| View file with scroll support | `less file.txt` |
+| Edit file in Nano editor | `nano file.txt` |
+| Edit file in Vim editor | `vim file.txt` |
+
+### View file contents
+~~~bash
+cat file.txt
+~~~
+
+### View file with scroll support
+~~~bash
+less file.txt
+~~~
+
+### Edit file in Nano editor
+~~~bash
+nano file.txt
+~~~
+
+### Edit file in Vim editor
+~~~bash
+vim file.txt
+~~~
 
 # ⚙️ System Info & Monitoring
 
 | Description | Command |
 |-------------|---------|
-| Show system information | ~~~bash<br>uname -a<br>~~~ |
-| Show disk usage | ~~~bash<br>df -h<br>~~~ |
-| Show memory usage | ~~~bash<br>free -h<br>~~~ |
-| Show running processes | ~~~bash<br>top<br>~~~ |
-| Interactive process viewer | ~~~bash<br>htop<br>~~~ |
-| Install htop | ~~~bash<br>sudo apt install htop<br>~~~ |
+| Show system information | `uname -a` |
+| Show disk usage | `df -h` |
+| Show memory usage | `free -h` |
+| Show running processes | `top` |
+| Interactive process viewer | `htop` |
+| Install htop | `sudo apt install htop` |
+
+### Show system information
+~~~bash
+uname -a
+~~~
+
+### Show disk usage
+~~~bash
+df -h
+~~~
+
+### Show memory usage
+~~~bash
+free -h
+~~~
+
+### Show running processes
+~~~bash
+top
+~~~
+
+### Interactive process viewer
+~~~bash
+htop
+~~~
+
+### Install htop
+~~~bash
+sudo apt install htop
+~~~
 
 # 🔐 Permissions
 
 | Description | Command |
 |-------------|---------|
-| Change file permissions | ~~~bash<br>chmod 755 file<br>~~~ |
-| Change file owner and group | ~~~bash<br>chown user:group file<br>~~~ |
-| Run a command as superuser | ~~~bash<br>sudo <command><br>~~~ |
+| Change file permissions | `chmod 755 file` |
+| Change file owner and group | `chown user:group file` |
+| Run a command as superuser | `sudo <command>` |
+
+### Change file permissions
+~~~bash
+chmod 755 file
+~~~
+
+### Change file owner and group
+~~~bash
+chown user:group file
+~~~
+
+### Run a command as superuser
+~~~bash
+sudo <command>
+~~~
 
 # 🌐 Networking
 
 | Description | Command |
 |-------------|---------|
-| Test network connectivity | ~~~bash<br>ping example.com<br>~~~ |
-| Fetch a web page | ~~~bash<br>curl http://example.com<br>~~~ |
-| Download a file | ~~~bash<br>wget http://example.com/file.zip<br>~~~ |
-| Show network interfaces (deprecated) | ~~~bash<br>ifconfig<br>~~~ |
-| Show network interfaces (modern) | ~~~bash<br>ip addr<br>~~~ |
+| Test network connectivity | `ping example.com` |
+| Fetch a web page | `curl http://example.com` |
+| Download a file | `wget http://example.com/file.zip` |
+| Show network interfaces (deprecated) | `ifconfig` |
+| Show network interfaces (modern) | `ip addr` |
+
+### Test network connectivity
+~~~bash
+ping example.com
+~~~
+
+### Fetch a web page
+~~~bash
+curl http://example.com
+~~~
+
+### Download a file
+~~~bash
+wget http://example.com/file.zip
+~~~
+
+### Show network interfaces (deprecated)
+~~~bash
+ifconfig
+~~~
+
+### Show network interfaces (modern)
+~~~bash
+ip addr
+~~~
 
 # 🗜️ Archiving & Compression
 
 | Description | Command |
 |-------------|---------|
-| Create a tar archive | ~~~bash<br>tar -cvf archive.tar file1 file2<br>~~~ |
-| Extract a tar archive | ~~~bash<br>tar -xvf archive.tar<br>~~~ |
-| Create a compressed tar.gz archive | ~~~bash<br>tar -czvf archive.tar.gz folder<br>~~~ |
-| Extract a tar.gz archive | ~~~bash<br>tar -xzvf archive.tar.gz<br>~~~ |
-| Extract a zip file | ~~~bash<br>unzip file.zip<br>~~~ |
+| Create a tar archive | `tar -cvf archive.tar file1 file2` |
+| Extract a tar archive | `tar -xvf archive.tar` |
+| Create a compressed tar.gz archive | `tar -czvf archive.tar.gz folder` |
+| Extract a tar.gz archive | `tar -xzvf archive.tar.gz` |
+| Extract a zip file | `unzip file.zip` |
+
+### Create a tar archive
+~~~bash
+tar -cvf archive.tar file1 file2
+~~~
+
+### Extract a tar archive
+~~~bash
+tar -xvf archive.tar
+~~~
+
+### Create a compressed tar.gz archive
+~~~bash
+tar -czvf archive.tar.gz folder
+~~~
+
+### Extract a tar.gz archive
+~~~bash
+tar -xzvf archive.tar.gz
+~~~
+
+### Extract a zip file
+~~~bash
+unzip file.zip
+~~~
 
 # ⚡ Advanced Commands & Power Tools
 
 | Description | Command |
 |-------------|---------|
-| Search for a pattern in a file | ~~~bash<br>grep "pattern" file.txt<br>~~~ |
-| Search recursively in a directory | ~~~bash<br>grep -r "pattern" /path<br>~~~ |
-| Find files by name | ~~~bash<br>find /path -name "*.txt"<br>~~~ |
-| Find files larger than 10 MB | ~~~bash<br>find /path -type f -size +10M<br>~~~ |
-| Quickly find files (requires mlocate) | ~~~bash<br>locate filename<br>~~~ |
-| Print the first column of a file | ~~~bash<br>awk '{print $1}' file.txt<br>~~~ |
-| Print the second column of a CSV | ~~~bash<br>awk -F, '{print $2}' file.csv<br>~~~ |
-| Replace all occurrences of "foo" with "bar" | ~~~bash<br>sed 's/foo/bar/g' file.txt<br>~~~ |
-| Sort lines alphabetically | ~~~bash<br>sort file.txt<br>~~~ |
-| Sort lines numerically | ~~~bash<br>sort -n file.txt<br>~~~ |
-| Remove duplicate lines (adjacent) | ~~~bash<br>uniq file.txt<br>~~~ |
-| Show command history | ~~~bash<br>history<br>~~~ |
-| Repeat the last command | ~~~bash<br>!!<br>~~~ |
-| Repeat command number n from history | ~~~bash<br>!n<br>~~~ |
-| Build and execute commands from input | ~~~bash<br>xargs<br>~~~ |
-| Show size of each item in current directory | ~~~bash<br>du -sh *<br>~~~ |
-| Sync files/directories efficiently | ~~~bash<br>rsync -av source/ destination/<br>~~~ |
-| Securely copy file to remote server | ~~~bash<br>scp file.txt user@host:/path<br>~~~ |
-| Connect to a remote server via SSH | ~~~bash<br>ssh user@host<br>~~~ |
+| Search for a pattern in a file | `grep "pattern" file.txt` |
+| Search recursively in a directory | `grep -r "pattern" /path` |
+| Find files by name | `find /path -name "*.txt"` |
+| Find files larger than 10 MB | `find /path -type f -size +10M` |
+| Quickly find files (requires mlocate) | `locate filename` |
+| Print the first column of a file | `awk '{print $1}' file.txt` |
+| Print the second column of a CSV | `awk -F, '{print $2}' file.csv` |
+| Replace all occurrences of "foo" with "bar" | `sed 's/foo/bar/g' file.txt` |
+| Sort lines alphabetically | `sort file.txt` |
+| Sort lines numerically | `sort -n file.txt` |
+| Remove duplicate lines (adjacent) | `uniq file.txt` |
+| Show command history | `history` |
+| Repeat the last command | `!!` |
+| Repeat command number n from history | `!n` |
+| Build and execute commands from input | `xargs` |
+| Show size of each item in current directory | `du -sh *` |
+| Sync files/directories efficiently | `rsync -av source/ destination/` |
+| Securely copy file to remote server | `scp file.txt user@host:/path` |
+| Connect to a remote server via SSH | `ssh user@host` |
+
+### Search for a pattern in a file
+~~~bash
+grep "pattern" file.txt
+~~~
+
+### Search recursively in a directory
+~~~bash
+grep -r "pattern" /path
+~~~
+
+### Find files by name
+~~~bash
+find /path -name "*.txt"
+~~~
+
+### Find files larger than 10 MB
+~~~bash
+find /path -type f -size +10M
+~~~
+
+### Quickly find files (requires mlocate)
+~~~bash
+locate filename
+~~~
+
+### Print the first column of a file
+~~~bash
+awk '{print $1}' file.txt
+~~~
+
+### Print the second column of a CSV
+~~~bash
+awk -F, '{print $2}' file.csv
+~~~
+
+### Replace all occurrences of "foo" with "bar"
+~~~bash
+sed 's/foo/bar/g' file.txt
+~~~
+
+### Sort lines alphabetically
+~~~bash
+sort file.txt
+~~~
+
+### Sort lines numerically
+~~~bash
+sort -n file.txt
+~~~
+
+### Remove duplicate lines (adjacent)
+~~~bash
+uniq file.txt
+~~~
+
+### Show command history
+~~~bash
+history
+~~~
+
+### Repeat the last command
+~~~bash
+!!
+~~~
+
+### Repeat command number n from history
+~~~bash
+!n
+~~~
+
+### Build and execute commands from input
+~~~bash
+xargs
+~~~
+
+### Show size of each item in current directory
+~~~bash
+du -sh *
+~~~
+
+### Sync files/directories efficiently
+~~~bash
+rsync -av source/ destination/
+~~~
+
+### Securely copy file to remote server
+~~~bash
+scp file.txt user@host:/path
+~~~
+
+### Connect to a remote server via SSH
+~~~bash
+ssh user@host
+~~~
+
