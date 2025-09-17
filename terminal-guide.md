@@ -45,6 +45,47 @@ cd ..
 cd ~
 ~~~
 
+# ⚙️ System Info & Monitoring
+
+| Description | Command |
+|-------------|---------|
+| Show system information | `uname -a` |
+| Show disk usage | `df -h` |
+| Show memory usage | `free -h` |
+| Show running processes | `top` |
+| Interactive process viewer | `htop` |
+| Install htop | `sudo apt install htop` |
+
+### Show system information
+~~~bash
+uname -a
+~~~
+
+### Show disk usage
+~~~bash
+df -h
+~~~
+
+### Show memory usage
+~~~bash
+free -h
+~~~
+
+### Show running processes
+~~~bash
+top
+~~~
+
+### Interactive process viewer
+~~~bash
+htop
+~~~
+
+### Install htop
+~~~bash
+sudo apt install htop
+~~~
+
 # 📄 File & Directory Management
 
 | Description | Command |
@@ -154,47 +195,6 @@ nano file.txt
 ### Edit file in Vim editor
 ~~~bash
 vim file.txt
-~~~
-
-# ⚙️ System Info & Monitoring
-
-| Description | Command |
-|-------------|---------|
-| Show system information | `uname -a` |
-| Show disk usage | `df -h` |
-| Show memory usage | `free -h` |
-| Show running processes | `top` |
-| Interactive process viewer | `htop` |
-| Install htop | `sudo apt install htop` |
-
-### Show system information
-~~~bash
-uname -a
-~~~
-
-### Show disk usage
-~~~bash
-df -h
-~~~
-
-### Show memory usage
-~~~bash
-free -h
-~~~
-
-### Show running processes
-~~~bash
-top
-~~~
-
-### Interactive process viewer
-~~~bash
-htop
-~~~
-
-### Install htop
-~~~bash
-sudo apt install htop
 ~~~
 
 # 🔐 Permissions
