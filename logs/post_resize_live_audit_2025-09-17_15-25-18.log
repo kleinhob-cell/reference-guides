@@ -1,0 +1,105 @@
+=== Post-Resize Live Audit ===
+Wed Sep 17 03:25:18 PM EDT 2025
+
+[1/6] Filesystem & Mount Table Verification
+/
+   [ ] target exists
+   [ ] source /dev/disk/by-uuid/fe61e27c-ca2b-49b3-9b76-10d161a72d1f exists
+   [ ] FS type is ext4
+/boot/efi
+   [ ] target exists
+   [ ] source /dev/disk/by-uuid/7208-3644 exists
+   [ ] FS type is vfat
+/mnt/steamdata
+   [ ] target exists
+   [ ] FS options: windows_names,uid=1000,gid=1000
+   [ ] UUID=E07CB1D67CB1A7A4 translated to /dev/nvme1n1p1
+   [ ] source /dev/nvme1n1p1 exists
+   [W] ntfs3 does not match with on-disk ntfs
+none
+   [W] non-bind mount source /swapfile is a directory or regular file
+   [ ] FS type is swap
+
+[2/6] Partition & UUID Map
+NAME        FSTYPE   FSVER LABEL UUID                                 FSAVAIL FSUSE% MOUNTPOINTS
+loop0       squashfs 4.0                                                    0   100% /snap/core22/2045
+loop1       squashfs 4.0                                                    0   100% /snap/bare/5
+loop2       squashfs 4.0                                                    0   100% /snap/core22/2111
+loop3       squashfs 4.0                                                    0   100% /snap/firefox/6565
+loop4       squashfs 4.0                                                    0   100% /snap/firefox/6782
+loop5       squashfs 4.0                                                    0   100% /snap/firmware-updater/167
+loop6       squashfs 4.0                                                    0   100% /snap/gnome-42-2204/202
+loop7       squashfs 4.0                                                    0   100% /snap/gtk-common-themes/1535
+loop8       squashfs 4.0                                                    0   100% /snap/snap-store/1270
+loop9       squashfs 4.0                                                    0   100% /snap/snapd/24792
+loop10                                                                      0   100% /snap/snapd-desktop-integration/315
+loop11                                                                      0   100% /snap/snapd/25202
+nvme0n1                                                                              
+├─nvme0n1p1 vfat     FAT32       AC5A-8F1A                                           
+├─nvme0n1p2                                                                          
+├─nvme0n1p3 ntfs                 26AA5B66AA5B3193                                    
+└─nvme0n1p4 ntfs                 703CCE723CCE32C0                                    
+nvme1n1                                                                              
+├─nvme1n1p1 ntfs                 E07CB1D67CB1A7A4                      966.5G    32% /mnt/steamdata
+├─nvme1n1p2 ext4     1.0         fe61e27c-ca2b-49b3-9b76-10d161a72d1f  179.6G    54% /
+└─nvme1n1p3 vfat     FAT32       7208-3644                                 1G     1% /boot/efi
+/dev/nvme1n1p2: UUID="fe61e27c-ca2b-49b3-9b76-10d161a72d1f" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="aaef1e6b-02"
+/dev/loop1: BLOCK_SIZE="131072" TYPE="squashfs"
+/dev/nvme0n1p3: BLOCK_SIZE="512" UUID="26AA5B66AA5B3193" TYPE="ntfs" PARTLABEL="Basic data partition" PARTUUID="ed7f86b4-f850-4bf2-8c15-84a0edfd4b58"
+/dev/nvme0n1p1: UUID="AC5A-8F1A" BLOCK_SIZE="512" TYPE="vfat" PARTLABEL="EFI system partition" PARTUUID="c15fdcc3-2c46-4798-9193-87529f68e9cf"
+/dev/nvme0n1p4: BLOCK_SIZE="512" UUID="703CCE723CCE32C0" TYPE="ntfs" PARTUUID="e60fe8b5-a2f9-4345-bc6c-077d695b5c5b"
+/dev/loop8: BLOCK_SIZE="131072" TYPE="squashfs"
+/dev/loop6: BLOCK_SIZE="131072" TYPE="squashfs"
+/dev/loop4: BLOCK_SIZE="131072" TYPE="squashfs"
+/dev/loop11: BLOCK_SIZE="131072" TYPE="squashfs"
+/dev/loop2: BLOCK_SIZE="131072" TYPE="squashfs"
+/dev/loop0: BLOCK_SIZE="131072" TYPE="squashfs"
+/dev/loop9: BLOCK_SIZE="131072" TYPE="squashfs"
+/dev/loop7: BLOCK_SIZE="131072" TYPE="squashfs"
+/dev/nvme1n1p3: UUID="7208-3644" BLOCK_SIZE="512" TYPE="vfat" PARTUUID="aaef1e6b-03"
+/dev/nvme1n1p1: BLOCK_SIZE="512" UUID="E07CB1D67CB1A7A4" TYPE="ntfs" PARTUUID="aaef1e6b-01"
+/dev/loop5: BLOCK_SIZE="131072" TYPE="squashfs"
+/dev/loop3: BLOCK_SIZE="131072" TYPE="squashfs"
+/dev/loop10: BLOCK_SIZE="131072" TYPE="squashfs"
+
+[3/6] Swap Status
+NAME      TYPE SIZE USED PRIO
+/swapfile file  34G   0B   -2
+               total        used        free      shared  buff/cache   available
+Mem:            30Gi       7.6Gi        14Gi       116Mi       8.6Gi        22Gi
+Swap:           33Gi          0B        33Gi
+
+[4/6] Filesystem State (ext4 volumes)
+
+[5/6] Kernel & Journal Disk Warnings (last 1h)
+[    0.000000] x86/split lock detection: #DB: warning on user-space bus_locks
+[    0.066604] APIC: Switch to symmetric I/O mode setup
+[    2.534748] ACPI: \_TZ_.TZ10: _PSL evaluation failure
+[    2.610163] RAS: Correctable Errors collector initialized.
+[    2.811315] hub 12-0:1.0: config failed, hub doesn't have any ports! (err -19)
+[    4.873990] amdkcl: module verification failed: signature and/or required key missing - tainting kernel
+[    7.555553] ACPI Warning: SystemIO range 0x0000000000000B00-0x0000000000000B08 conflicts with OpRegion 0x0000000000000B00-0x0000000000000B0F (\GSA1.SMBI) (20240322/utaddress-204)
+[    7.994619] usb 3-5: Warning! Unlikely big volume range (=8065), cval->res is probably wrong.
+[    8.024653] usb 3-5: Warning! Unlikely big volume range (=8065), cval->res is probably wrong.
+[    8.116981] usb 3-5: Warning! Unlikely big volume range (=6928), cval->res is probably wrong.
+[    8.146628] usb 3-5: Warning! Unlikely big volume range (=6928), cval->res is probably wrong.
+[    8.179628] usb 3-5: Warning! Unlikely big volume range (=6928), cval->res is probably wrong.
+[  127.257492] warning: `ThreadPoolForeg' uses wireless extensions which will stop working for Wi-Fi 7 hardware; use nl80211
+[  163.194442] usb 9-2: WARN: invalid context state for evaluate context command.
+[  163.194663] usb 5-1: WARN: invalid context state for evaluate context command.
+[  163.250786] usb 3-12: WARN: invalid context state for evaluate context command.
+[  163.315641] amdgpu 0000:7b:00.0: amdgpu: [drm] *ERROR* lttpr_caps phy_repeater_cnt is 0x0, forcing it to 0x80.
+[  163.698486] usb 3-7: WARN: invalid context state for evaluate context command.
+[  163.997243] usb 1-12: WARN: invalid context state for evaluate context command.
+[  164.148450] usb 3-5: WARN: invalid context state for evaluate context command.
+[  164.598184] usb 3-9: WARN: invalid context state for evaluate context command.
+[  166.114488] mt7925e 0000:0f:00.0: PM: failed to restore async: error -110
+Sep 17 14:53:13 BKS-UBUNTU-DESKTOP kernel: hub 12-0:1.0: config failed, hub doesn't have any ports! (err -19)
+Sep 17 14:57:02 BKS-UBUNTU-DESKTOP kernel: amdgpu 0000:7b:00.0: amdgpu: [drm] *ERROR* lttpr_caps phy_repeater_cnt is 0x0, forcing it to 0x80.
+Sep 17 14:57:02 BKS-UBUNTU-DESKTOP kernel: mt7925e 0000:0f:00.0: PM: dpm_run_callback(): pci_pm_restore returns -110
+Sep 17 14:57:02 BKS-UBUNTU-DESKTOP kernel: mt7925e 0000:0f:00.0: PM: failed to restore async: error -110
+
+[6/6] Meeting Assistant Stack Check
+Meeting assistant directory not found.
+
+=== Audit Complete ===
