@@ -250,7 +250,6 @@ models:
       - chat
       - edit
       - apply
-      - review
 
   - name: mixtral8x7b
     provider: ollama
@@ -258,7 +257,6 @@ models:
     api_base: http://localhost:11434
     roles:
       - chat
-      - review
 
   - name: qwen2.5coder1b
     provider: ollama
@@ -297,7 +295,6 @@ models:
     roles:
       - edit
       - chat
-      - review
 
   - name: qwen3_14b
     provider: ollama
@@ -305,8 +302,6 @@ models:
     api_base: http://localhost:11434
     roles:
       - chat
-      - automation
-      - spec
       - apply
 
   - name: noushermes7b
@@ -315,8 +310,6 @@ models:
     api_base: http://localhost:11434
     roles:
       - chat
-      - summarize
-      - wrapup
 
   - name: noushermes13b
     provider: ollama
@@ -324,7 +317,6 @@ models:
     api_base: http://localhost:11434
     roles:
       - chat
-      - assistant
 
   - name: llama3
     provider: ollama
@@ -332,8 +324,6 @@ models:
     api_base: http://localhost:11434
     roles:
       - chat
-      - assistant
-      - spec
 
   - name: llama3_70b
     provider: ollama
@@ -341,7 +331,6 @@ models:
     api_base: http://localhost:11434
     roles:
       - chat
-      - review
 
 # Defaults must reference `name:` keys
 default_model: starcoder2_3b
@@ -353,10 +342,6 @@ default_rerank_model: qwen2.5coder1b
 ui:
   show_model_picker: true
   sidebar_width: 350
-
-# Prompts section from your existing config goes here unchanged
-
-
 
 prompts:
   - name: build-feature
@@ -540,8 +525,6 @@ prompts:
 # CUSTOM PROMPTS
 # =========================
 # Add your own custom prompts below. See https://continue.so/docs/prompts for details.
-
-
 ```
 
 ---
