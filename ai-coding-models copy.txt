@@ -4,37 +4,37 @@
 ---
 
 ## 📑 Table of Contents
-- [🧠 AI Coding Models Reference](#-ai-coding-models-reference)
-  - [📑 Table of Contents](#-table-of-contents)
-  - [📄 Overview](#-overview)
-  - [💻 Hardware Context](#-hardware-context)
-  - [📊 VRAM Fit Table](#-vram-fit-table)
-  - [⚡ Quick Reference Table](#-quick-reference-table)
-  - [🧩 Per‑Model Details](#-permodel-details)
-    - [`qwen2.5-coder:1.5b`](#qwen25-coder15b)
-    - [`starcoder2:3b`](#starcoder23b)
-    - [`deepseek-coder:6.7b-base`](#deepseek-coder67b-base)
-    - [`codellama:13b-instruct`](#codellama13b-instruct)
-    - [`gemma3:12b`](#gemma312b)
-    - [`qwen3:14b`](#qwen314b)
-    - [`nous-hermes:7b`](#nous-hermes7b)
-    - [`nous-hermes:13b`](#nous-hermes13b)
-    - [`llama3`](#llama3)
-    - [`llama3:70b`](#llama370b)
-    - [`mixtral:8x7b`](#mixtral8x7b)
-- [🧠 Ollama Model Setup \& Recovery Guide](#-ollama-model-setup--recovery-guide)
-  - [📊 Model Comparison Table — Current Script Loadout](#-model-comparison-table--current-script-loadout)
-  - [🔀 Pipeline Role Mapping](#-pipeline-role-mapping)
-  - [🛠 Rebuild \& Recovery Instructions](#-rebuild--recovery-instructions)
-    - [1. Re‑run the Setup Script](#1-rerun-the-setup-script)
-    - [2. Verify Model Availability](#2-verify-model-availability)
-    - [3. Troubleshoot “file does not exist” Errors](#3-troubleshoot-file-does-not-exist-errors)
-    - [4. Re‑run the Benchmark Script](#4-rerun-the-benchmark-script)
-    - [5. Full Clean Rebuild](#5-full-clean-rebuild)
-  - [📌 Notes](#-notes)
-  - [Continue config.yaml (Reference)](#continue-configyaml-reference)
-  - [ollama\_model\_setup.sh (Reference)](#ollama_model_setupsh-reference)
-  - [🧹 Removed Models (Audit Notes)](#-removed-models-audit-notes)
+- [🧠 AI Coding Models Reference](#-ai-coding-models-reference)  
+  - [📄 Overview](#-overview)  
+  - [💻 Hardware Context](#-hardware-context)  
+  - [📊 VRAM Fit Table](#-vram-fit-table)  
+  - [⚡ Quick Reference Table](#-quick-reference-table)  
+  - [🧩 Per‑Model Details](#-per-model-details)  
+    - [`qwen2.5-coder:1.5b`](#qwen25-coder15b)  
+    - [`starcoder2:3b`](#starcoder23b)  
+    - [`deepseek-coder:6.7b-base`](#deepseek-coder67b-base)  
+    - [`codellama:13b-instruct`](#codellama13b-instruct)  
+    - [`gemma3:12b`](#gemma312b)  
+    - [`qwen3:14b`](#qwen314b)  
+    - [`nous-hermes:7b`](#nous-hermes7b)  
+    - [`nous-hermes:13b`](#nous-hermes13b)  
+    - [`llama3`](#llama3)  
+    - [`llama3:70b`](#llama370b)  
+    - [`mixtral:8x7b`](#mixtral8x7b)  
+- [🧠 Ollama Model Setup & Recovery Guide](#-ollama-model-setup--recovery-guide)  
+  - [📊 Model Comparison Table — Current Script Loadout](#-model-comparison-table--current-script-loadout)  
+  - [🔀 Pipeline Role Mapping](#-pipeline-role-mapping)  
+  - [🛠 Rebuild & Recovery Instructions](#-rebuild--recovery-instructions)  
+    - [1. Re‑run the Setup Script](#1-re-run-the-setup-script)  
+    - [2. Verify Model Availability](#2-verify-model-availability)  
+    - [3. Troubleshoot “file does not exist” Errors](#3-troubleshoot-file-does-not-exist-errors)  
+    - [4. Re‑run the Benchmark Script](#4-re-run-the-benchmark-script)  
+    - [5. Full Clean Rebuild](#5-full-clean-rebuild)  
+  - [📌 Notes](#-notes)  
+  - [Continue config.yaml (Reference)](#continue-configyaml-reference)  
+  - [ollama_model_setup.sh (Reference)](#ollama_model_setupsh-reference)  
+  - [🧹 Removed Models (Audit Notes)](#-removed-models-audit-notes)  
+
 
 ---
 
@@ -236,7 +236,9 @@ ollama list | awk 'NR>1 {print $1}' | xargs -n1 ollama rm
 
 ## Continue config.yaml (Reference)
 ```bash
-# Continue VS Code Extension Config (v1.2.0 compatible)
+# Continue VS Code Extension Config (v1.2.2)
+# See /home/brent/reference-guides/mixtral-architect-review.md for usage details
+
 name: brent-local-ollama
 version: 1.0.0
 schema: v1
@@ -250,7 +252,6 @@ models:
       - chat
       - edit
       - apply
-      - review
 
   - name: mixtral8x7b
     provider: ollama
@@ -258,7 +259,8 @@ models:
     api_base: http://localhost:11434
     roles:
       - chat
-      - review
+      - edit
+      - apply
 
   - name: qwen2.5coder1b
     provider: ollama
@@ -297,7 +299,8 @@ models:
     roles:
       - edit
       - chat
-      - review
+      - explain
+      - refactor
 
   - name: qwen3_14b
     provider: ollama
@@ -325,6 +328,7 @@ models:
     roles:
       - chat
       - assistant
+      - synthesis
 
   - name: llama3
     provider: ollama
@@ -334,6 +338,7 @@ models:
       - chat
       - assistant
       - spec
+      - fallback
 
   - name: llama3_70b
     provider: ollama
@@ -341,22 +346,27 @@ models:
     api_base: http://localhost:11434
     roles:
       - chat
+      - synthesis
+      - strategic
       - review
 
-# Defaults must reference `name:` keys
-default_model: starcoder2_3b
+
+# =========================
+# DEFAULTS — BEST FOR ME AND PIPELINE MODE
+# =========================
+# These defaults are optimized for my local Ollama setup and the full-feature-pipeline prompt.
+# Adjust as needed for your own models and preferences.
+
+default_model: starcoder2:3b
 default_chat_model: codellama13b
-default_edit_model: gemma3_12b
+default_edit_model: gemma3:12b
 default_apply_model: deepseekcoder6.7b
 default_rerank_model: qwen2.5coder1b
+
 
 ui:
   show_model_picker: true
   sidebar_width: 350
-
-# Prompts section from your existing config goes here unchanged
-
-
 
 prompts:
   - name: build-feature
@@ -384,7 +394,7 @@ prompts:
 
   - name: refactor-for-clarity
     description: Improve readability, maintainability, and structure
-    model: gemma3_12b
+    model: gemma3:12b
     prompt: |
       Refactor the provided code to:
         - Improve naming and structure
@@ -419,19 +429,17 @@ prompts:
     prompt: |
       Analyze the provided code for performance bottlenecks.
       Suggest and implement optimizations to improve speed and reduce resource usage.
-      Ensure the optimized code maintains the same functionality.
-      Output only the optimized code.
+      Ensure the optimized code maintains the same functionality. Output only the optimized code.
 
   - name: explain-code
     description: Provide a detailed explanation of the code's functionality
-    model: gemma3_12b
+    model: gemma3:12b
     prompt: |
       Explain the functionality of the provided code in detail.
       - Describe the purpose of the code.
       - Explain how it works step-by-step.
       - Highlight any important design decisions or patterns used.
-      Output the explanation in clear, concise language.
-
+      Output the explanation in clear, concise language. 
 
   - name: translate-language
     description: Convert code from one programming language to another
@@ -459,9 +467,8 @@ prompts:
     prompt: |
       Analyze the provided code to identify any bugs or issues.
       Suggest specific fixes and implement them.
-      Ensure the fixed code maintains the same functionality.
-      Output only the corrected code.
-
+      Ensure the fixed code maintains the same functionality. Output only the corrected code.
+  
   - name: code-review
     description: Review code for quality, style, and best practices
     model: codellama13b
@@ -539,8 +546,7 @@ prompts:
 # =========================
 # CUSTOM PROMPTS
 # =========================
-# Add your own custom prompts below. See https://continue.so/docs/prompts for details.
-
+# Add your own custom prompts below. See https://continue.so/docs/prompts for details.  
 
 ```
 
@@ -652,6 +658,7 @@ echo "❌ gemma:2b"
 echo "❌ gemma:7b"
 echo "❌ gemma2:9b (replaced by gemma3:12b)"
 echo "❌ qwen2.5:14b (replaced by qwen3:14b)"
+echo "❌ deepseek-coder:6.7b-base (replaced by deepseek-v3.1:7b)"
 echo "❌ codellama:7b-instruct"
 
 # -----------------------------------------------------------------------------

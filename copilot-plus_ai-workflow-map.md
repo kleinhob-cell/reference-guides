@@ -1,246 +1,88 @@
-# 🧠 Copilot++ Local AI Workflow Map
-
-## Table of Contents
-- [🧠 Copilot++ Local AI Workflow Map](#-copilot-local-ai-workflow-map)
-  - [Table of Contents](#table-of-contents)
-  - [1. Default Models by Role](#1-default-models-by-role)
-  - [2. Prompt → Model Mapping](#2-prompt--model-mapping)
-  - [2.1 Installed Model Comparison](#21-installed-model-comparison)
-  - [3. Model Switching Guide](#3-model-switching-guide)
-  - [4. Workflow Examples](#4-workflow-examples)
-  - [5. Tips](#5-tips)
-  - [🛠 Spec Prep — Preparing a High‑Quality Feature Specification](#-spec-prep--preparing-a-highquality-feature-specification)
-    - [Available Prompts](#available-prompts)
-    - [Workflow](#workflow)
-    - [Why This Matters](#why-this-matters)
-  - [📋 Feature Specification Guide](#-feature-specification-guide)
-    - [1. **Feature Overview**](#1-feature-overview)
-    - [2. **Functional Requirements**](#2-functional-requirements)
-    - [3. **Technical Context**](#3-technical-context)
-    - [4. **Data \& Storage**](#4-data--storage)
-    - [5. **Security \& Compliance**](#5-security--compliance)
-    - [6. **Testing Expectations**](#6-testing-expectations)
-    - [7. **Documentation Needs**](#7-documentation-needs)
-  - [Full Feature Pipeline Usage](#full-feature-pipeline-usage)
-    - [Purpose](#purpose)
-    - [When to Use](#when-to-use)
-    - [How to Run in Continue](#how-to-run-in-continue)
-    - [Example Input](#example-input)
-    - [Example Output Structure](#example-output-structure)
+# 🧠 Copilot+ AI Workflow Map  
+**Model Routing • Prompt Roles • Assistant Integration**
 
 ---
 
-## 1. Default Models by Role
-| Role            | Default Model     | Purpose |
-|-----------------|-------------------|---------|
-| **Autocomplete** | `starcoder2_3b`   | Code‑tuned, rich inline completions |
-| **Chat**         | `codellama13b`    | Balanced reasoning + speed |
-| **Edit**         | `codellama13b`    | In‑place transformations with strong reasoning |
-| **Apply**        | `codellama13b`    | Apply code changes directly in file |
-| **Rerank**       | `qwen2.5coder1b`  | Ultra‑fast candidate ranking for autocomplete |
+## 📑 Table of Contents
+- [🧠 Copilot+ AI Workflow Map](#-copilot-ai-workflow-map)
+  - [📑 Table of Contents](#-table-of-contents)
+  - [📄 Overview](#-overview)
+  - [🔀 Model Routing Summary](#-model-routing-summary)
+  - [🧩 Prompt Role Assignments](#-prompt-role-assignments)
+  - [🤖 Assistant Stack](#-assistant-stack)
+  - [⚠️ Removed Models (Audit Notes)](#️-removed-models-audit-notes)
 
 ---
 
-## 2. Prompt → Model Mapping
-| Prompt Name              | Default Model       | Best For |
-|--------------------------|---------------------|----------|
-| **build-feature**        | `codellama13b`      | Multi‑step feature builds from specs |
-| **build-and-validate**   | `codellama13b`      | Generate + self‑critique loop |
-| **refactor-for-clarity** | `codellama7b`       | Fast, structural clean‑ups |
-| **add-tests**            | `deepseekcoder6.7b` | Comprehensive, relevant test suites |
-| **security-review**      | `codellama13b`      | Spotting subtle security issues |
-| **optimize-performance** | `deepseekcoder6.7b` | Code‑level optimizations |
-| **explain-code**         | `codellama7b`       | Quick, clear explanations |
-| **translate-language**   | `codellama13b`      | Syntax + idiom‑aware translations |
-| **generate-documentation** | `codellama13b`    | Structured, readable docs |
-| **debug-code**           | `deepseekcoder6.7b` | Pinpointing and fixing bugs |
-| **code-review**          | `codellama13b`      | Style, quality, and best practices |
-| **integrate-library**    | `codellama13b`      | Multi‑file library/framework integration |
+## 📄 Overview
+This guide maps prompt roles to installed models across Brent’s local Ollama stack.  
+It supports reproducible workflows for coding, product automation, and meeting assistant tasks.  
+See `/reference-guides/ai-coding-models.md` for model descriptions and VRAM fit.
 
 ---
 
-## 2.1 Installed Model Comparison
+## 🔀 Model Routing Summary
 
-| Model Name / Tag              | Size (Params) | Approx VRAM Use* | Context Window | VRAM Fit** | Recommended Pairings | Strengths | Weaknesses | Best Use Cases |
-|-------------------------------|---------------|------------------|----------------|------------|----------------------|-----------|------------|----------------|
-| **codellama:7b-instruct**     | 7B            | ~8 GB            | ~4K tokens     | ✅ Dual‑load | `codellama13b` (chat) + `codellama7b` (edit) | Fast, low‑VRAM, great for quick refactors and explanations | Less depth for complex reasoning | refactor-for-clarity, explain-code |
-| **codellama:13b-instruct**    | 13B           | ~14 GB           | ~4K tokens     | ⚠ Single‑load | Pair with `qwen2.5coder1b` for autocomplete | Balanced reasoning + speed, strong general coding | Slower than 7B | build-feature, build-and-validate, security-review |
-| **mixtral:8x7b**              | MoE 8×7B      | ~24 GB (active experts) | ~32K tokens | ❌ Single‑load only | N/A | Long‑context reasoning, multi‑file awareness | High VRAM use, slower load | Large multi‑file builds, architecture reviews |
-| **qwen2.5-coder:1.5b**        | 1.5B          | ~2 GB            | ~4K tokens     | ✅ Dual‑load | `codellama13b` or `deepseekcoder6.7b` | Ultra‑fast, low‑VRAM; great reranker | Limited reasoning depth | autocomplete rerank, quick code completions |
-| **starcoder2:3b**             | 3B            | ~4 GB            | ~8K tokens     | ✅ Dual‑load | `codellama13b` or `deepseekcoder6.7b` | Code‑tuned completions, good inline suggestions | Weaker at multi‑step reasoning | default autocomplete, lightweight code gen |
-| **deepseek-coder:6.7b-base**  | 6.7B          | ~7 GB            | ~4K tokens     | ✅ Dual‑load | `codellama13b` for build/validate | Strong test generation, optimization, debugging | Slightly less NL fluency | add-tests, optimize-performance, debug-code |
-
-\* VRAM usage is approximate and varies by quantization, sequence length, and runtime.  
-\** VRAM Fit assumes RX 7900 XTX (24 GB VRAM) and indicates whether the model can be comfortably loaded alongside another for dual‑model workflows.
-
----
-
-## 3. Model Switching Guide
-- **Stay on defaults** for 90% of work — tuned for speed + quality.
-- **Switch to `mixtral8x7b`** only for:
-  - Large multi‑file reviews
-  - Architecture or security deep dives
-  - Long‑context reasoning (up to ~32K tokens)
-- **Switch autocomplete** to `qwen2.5coder1b` if you want maximum speed over richness.
-- **Switch autocomplete** to `codellama7b` if you want slightly more reasoning inline.
+| Task Type        | Default Model             | Notes |
+|------------------|----------------------------|-------|
+| Autocomplete     | `starcoder2:3b`            | Rich completions |
+| Rerank           | `qwen2.5-coder:1.5b`       | Fast fallback |
+| Chat/Review      | `codellama:13b-instruct`   | Deep reasoning |
+| Edit/Apply       | `deepseek-coder:6.7b-base` | Fast inline edits, optimization |
+| Refactor/Explain | `gemma3:12b`               | Assistant-style clarity |
+| Summarize        | `nous-hermes:7b`           | Wrap-up tone |
+| Automate         | `qwen3:14b`                | Structured output, multilingual |
+| Assistant (default) | `llama3`                | Fast, responsive |
+| Assistant (deep) | `nous-hermes:13b`          | Optional synthesis layer |
+| Strategic Synthesis | `llama3:70b`            | Final-pass summaries, deep analysis |
 
 ---
 
-## 4. Workflow Examples
-- **Feature Build** → Chat with `codellama13b` using `build-feature` → Insert into file.
-- **Refactor** → Highlight code → Run `refactor-for-clarity` (auto‑uses `codellama7b`).
-- **Test Generation** → Highlight code → Run `add-tests` (auto‑uses `deepseekcoder6.7b`).
-- **Security Audit** → Highlight code → Run `security-review` (auto‑uses `codellama13b`).
-- **Performance Tuning** → Highlight code → Run `optimize-performance` (auto‑uses `deepseekcoder6.7b`).
+## 🧩 Prompt Role Assignments
+
+| Prompt Name             | Assigned Model             |
+|-------------------------|----------------------------|
+| `build-feature`         | `codellama:13b-instruct`   |
+| `build-and-validate`    | `codellama:13b-instruct`   |
+| `refactor-for-clarity`  | `gemma3:12b`               |
+| `add-tests`             | `deepseek-coder:6.7b-base` |
+| `security-review`       | `codellama:13b-instruct`   |
+| `optimize-performance`  | `deepseek-coder:6.7b-base` |
+| `explain-code`          | `gemma3:12b`               |
+| `translate-language`    | `codellama:13b-instruct`   |
+| `generate-documentation`| `codellama:13b-instruct`   |
+| `debug-code`            | `deepseek-coder:6.7b-base` |
+| `code-review`           | `codellama:13b-instruct`   |
+| `integrate-library`     | `codellama:13b-instruct`   |
+| `full-feature-pipeline` | `codellama:13b-instruct`   |
+| `draft-feature-spec`    | `llama3`                   |
+| `refine-feature-spec`   | `llama3`                   |
+| `feature-specification-guide` | `llama3`             |
 
 ---
 
-## 5. Tips
-- **Edit vs Apply**:  
-  - **Edit:** In‑place changes with context from the file.  
-  - **Apply:** More explicit “take this code and apply a change” actions.
-- **Rerank** runs silently in the background for autocomplete — no manual trigger needed.
-- Keep **Mixtral** installed but only load it when you need long‑context power.
+## 🤖 Assistant Stack
+
+| Role               | Model                  | Notes |
+|--------------------|------------------------|-------|
+| Default Assistant  | `llama3`               | Fast, general-purpose |
+| Summarizer         | `nous-hermes:7b`       | Wrap-up tone |
+| Automation         | `qwen3:14b`            | Structured, multilingual |
+| Deep Assistant     | `nous-hermes:13b`      | Optional, richer synthesis |
+| Strategic Synthesis| `llama3:70b`           | Final-pass analysis, long-form reasoning |
 
 ---
 
-## 🛠 Spec Prep — Preparing a High‑Quality Feature Specification
+## ⚠️ Removed Models (Audit Notes)
 
-Before running `full-feature-pipeline`, use these prompts to ensure your feature specification is complete and implementation‑ready.
+~~~bash
+The following models were removed during the September 2025 audit:
 
-### Available Prompts
-- **`draft-feature-spec`** → Interactive Q&A to build a new spec from scratch.
-- **`refine-feature-spec`** → Review and improve an existing spec for clarity, completeness, and testability.
-- **`feature-specification-guide`** → Outputs the full checklist for writing high‑quality specs.
+- codellama:7b-instruct — replaced by gemma3:12b for refactor/explain
+- phi3 — replaced by llama3 and qwen3:14b
+- gemma:2b, gemma:7b, gemma2:9b — superseded by gemma3:12b
+- qwen2.5:14b — replaced by qwen3:14b
+- deepseek-coder:6.7b-base — temporarily removed, now reinstated
+~~~
 
-### Workflow
-1. **If starting from scratch** → Run `draft-feature-spec` and answer each question in detail.
-2. **If you have a draft** → Run `refine-feature-spec` to fill gaps and remove ambiguity.
-3. **Need a reminder of the structure?** → Run `feature-specification-guide` to see the full checklist.
-
-### Why This Matters
-A strong spec:
-- Reduces back‑and‑forth during implementation
-- Improves code quality and test coverage
-- Ensures security, performance, and compliance requirements are captured early
-
-**Tip:** See the [Feature Specification Guide](#feature-specification-guide) section for the complete checklist and an example.  
-**[Jump to Full Feature Pipeline Usage ↓](#full-feature-pipeline-usage)**
-
----
-
-## 📋 Feature Specification Guide
-
-A well‑crafted feature specification dramatically improves the quality of generated code, tests, and optimizations.  
-Use this checklist when preparing input for prompts like `build-feature` or `full-feature-pipeline`.
-
-### 1. **Feature Overview**
-- **Purpose:** What problem does this feature solve?
-- **User Story / Scenario:** Who uses it, and how?
-- **Scope:** What’s in and out of scope for this iteration?
-
-### 2. **Functional Requirements**
-- **Inputs:** Data formats, request parameters, file types, etc.
-- **Outputs:** Expected return values, response formats, or side effects.
-- **Core Logic:** Key steps or algorithms to implement.
-- **Edge Cases:** Unusual inputs, error conditions, or constraints.
-
-### 3. **Technical Context**
-- **Language & Framework:** e.g., Python + FastAPI, Node.js + Express.
-- **Dependencies:** Libraries, APIs, or services to integrate.
-- **Environment:** OS, container, or deployment target.
-- **Performance Targets:** Latency, throughput, or memory constraints.
-
-### 4. **Data & Storage**
-- **Database Schema:** Relevant tables, fields, and relationships.
-- **Persistence Rules:** What gets stored, updated, or deleted.
-- **Data Validation:** Required formats, ranges, or sanitization rules.
-
-### 5. **Security & Compliance**
-- **Authentication/Authorization:** Who can access what.
-- **Data Protection:** Encryption, masking, or secure storage.
-- **Regulatory Requirements:** GDPR, HIPAA, etc., if applicable.
-
-### 6. **Testing Expectations**
-- **Test Types:** Unit, integration, end‑to‑end.
-- **Coverage Goals:** Critical paths, edge cases, failure modes.
-- **Mocking/Stubbing:** External services or APIs to simulate.
-
-### 7. **Documentation Needs**
-- **Inline Comments:** Level of detail expected in code.
-- **External Docs:** README updates, API docs, or usage examples.
-- **Change Log:** Notes for maintainers on what changed and why.
-
----
-
-**Example Spec (Condensed)**
-
-**Feature:** Audio transcription endpoint  
-**Purpose:** Allow users to upload audio and receive a transcript.  
-**Inputs:** `.mp3` or `.wav` file via POST `/upload-audio`  
-**Outputs:** JSON with `transcript` string and `duration` in seconds  
-**Framework:** Python + FastAPI  
-**Dependencies:** OpenAI Whisper API, PostgreSQL  
-**Edge Cases:** Empty file, unsupported format, >10 MB file size  
-**Security:** Auth token required, store transcripts encrypted  
-**Tests:** Unit tests for file handling, integration test for DB write  
-**Docs:** Update API reference with new endpoint details
-
-**[Back to Spec Prep ↑](#-spec-prep--preparing-a-high-quality-feature-specification)**
-
----
-
-## Full Feature Pipeline Usage
-
-**Prompt name:** `full-feature-pipeline`  
-**Default model:** `codellama13b` (tests and optimization handled by `deepseekcoder6.7b`)
-
-### Purpose
-Run a complete Spec → Code → Validate → Test → Optimize chain in a single execution, producing:
-1. Final optimized code
-2. Unit tests
-3. Brief summary of changes and optimizations
-
-### When to Use
-- You have a clear feature specification and want a ready‑to‑ship implementation without running multiple prompts manually.  
-  - See the [Spec Prep](#-spec-prep--preparing-a-high-quality-feature-specification) section above for prompts to create or refine a high‑quality spec before running the pipeline.
-- You want built‑in validation and performance tuning before the first run.
-- You want unit tests generated automatically alongside the feature.
-- You’re working on a feature for the meeting assistant project (or similar) and want to go from idea to production‑ready code in one step.
-
-### How to Run in Continue
-1. Open the Continue sidebar in VS Code.
-2. Select the `full-feature-pipeline` prompt from the prompt list.
-3. Paste or type your feature specification into the input box.
-4. Press Enter — the pipeline will:
-   - Build the feature (`codellama13b`)
-   - Validate & correct it (`codellama13b`)
-   - Add tests (`deepseekcoder6.7b`)
-   - Optimize performance (`deepseekcoder6.7b`)
-5. Review the output:
-   - Final optimized code → paste into your project.
-   - Unit tests → save in your test suite.
-   - Summary → keep for commit messages or documentation.
-
-### Example Input
-```
-Build a FastAPI endpoint that accepts audio uploads, transcribes them using Whisper, and stores the transcript in PostgreSQL.
-```
-
-### Example Output Structure
-```
-# Final Optimized Code
-<code block>
-
-# Unit Tests
-<pytest code block>
-
-# Summary
-- Fixed missing error handling for file uploads
-- Added async DB writes for performance
-- Reduced memory footprint in transcription step
-```
-
-**Tip:** For large, multi‑file features, consider switching the build/validate stages to `mixtral8x7b` for its longer context window and deeper reasoning.
-
-**[Back to Spec Prep ↑](#-spec-prep--preparing-a-high-quality-feature-specification)**
+See `/docs/ollama_model_cleanup.sh` for reproducible cleanup.

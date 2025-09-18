@@ -34,6 +34,19 @@ default_model: codellama7b
 default_chat_model: codellama13b
 ~~~
 …and switch to Mixtral when you need deep reviews.
+# 🏗️ Mixtral 8x7B — Senior Architect & Security Reviews
+
+## 📄 Overview
+Mixtral 8x7B is a Mixture‑of‑Experts (MoE) model with a ~32K token context window, making it ideal for:
+- Multi‑file code reviews
+- Architectural risk assessment
+- Security audits
+- Design improvement suggestions
+
+**Strengths:**
+- **Long context window (~32K tokens)** — can review multiple files or entire modules at once.
+- **Mixture‑of‑Experts architecture** — routes queries to specialized experts for efficiency and quality.
+- **Balanced tone** — produces structured, actionable feedback without excessive verbosity.
 
 ## 🛠 Usage Workflow
 
@@ -105,7 +118,26 @@ While Mixtral is for deep reviews, you can experiment with:
 - `deepseek-coder:6.7b-base` — highest quality completions
 
 See `/home/brent/reference-guides/ai-coding-models.md` for full model role mapping.
+# 🏗️ Mixtral 8x7B — Senior Architect & Security Reviews
 
+## 📄 Overview
+Mixtral 8x7B is a Mixture‑of‑Experts (MoE) model with a ~32K token context window, making it ideal for:
+- Multi‑file code reviews
+- Architectural risk assessment
+- Security audits
+- Design improvement suggestions
+
+**Strengths:**
+- **Long context window (~32K tokens)** — can review multiple files or entire modules at once.
+- **Mixture‑of‑Experts architecture** — routes queries to specialized experts for efficiency and quality.
+- **Balanced tone** — produces structured, actionable feedback without excessive verbosity.
+
+## 🛠 Usage Workflow
+
+### When to Use Mixtral
+- **Architect Review:** Identify design flaws, maintainability issues, and improvement opportunities.
+- **Security Audit:** Spot vulnerabilities, insecure patterns, and missing best practices.
+- 
 ## 📌 Notes
 
 - Mixtral is heavier than CodeLlama models — use it for **periodic deep reviews**, not constant inline completions.
