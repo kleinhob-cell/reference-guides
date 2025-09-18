@@ -374,9 +374,6 @@ Each removal was benchmark‑driven and documented so future maintainers can rei
 | Model Name / Tag       | Reason for Removal | Replacement / Reroute |
 |------------------------|--------------------|-----------------------|
 | `codellama7b`          | Redundant with `codellama13b` for build tasks; lower reasoning depth | `codellama13b` |
-| `starcoder2_15b`       | High VRAM use with minimal gain over `starcoder2_3b` for autocomplete | `starcoder2_3b` |
-| `qwen2.5coder7b`       | Overlaps with `deepseekcoder6.7b` in test/debug role | `deepseekcoder6.7b` |
-| `mistral7b`            | Generalist role now covered by `llama3` and `noushermes7b` | `llama3` / `noushermes7b` |
 | `wizardcoder13b`       | Redundant with `codellama13b` in build/validate role | `codellama13b` |
 | `phi3`                 | Lower accuracy in structured output tasks compared to `qwen3_14b` | `qwen3_14b` |
 
