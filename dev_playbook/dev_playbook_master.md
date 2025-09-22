@@ -24,7 +24,7 @@ Agile principles inform planning and delivery, but ceremonies and tooling are mi
 
 ### Future Roadmap Item
 
-- [ ] Automate epic/feature/story creation and tracking via JIRA.  
+- [ ] Automate epic/feature/story crgiteation and tracking via JIRA.  
       Integrate with workflow manual and system docs.
 
 ### Agile Principles (Adapted)
