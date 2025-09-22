@@ -208,10 +208,10 @@ Each project includes architecture, workflow, and prompt-driven development logs
 
 ```mermaid
 flowchart TD
-    A[Idea/Feature Spec] --> B[Draft Feature Spec AI prompt]
-    B --> C[Generate Code Copilot/AI]
-    C --> D[Self-Review/Validate AI prompt]
-    D --> E[Add Tests AI prompt]
+    A[Idea/Feature Spec] --> B[Draft Feature Spec w/ AI prompt]
+    B --> C[Generate Code w/ Copilot/AI]
+    C --> D[Self-Review/Validate w/ AI prompt]
+    D --> E[Add Tests w/ AI prompt]
     E --> F[Debug/Refactor/Optimize]
     F --> G[Document & Deploy]
 ```
