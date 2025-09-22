@@ -892,7 +892,7 @@ Robust strategies for building AI applications using low-code workflows and AI a
 
 ```mermaid
 flowchart TD
-    A[Draft Spec] --> B[Low-Code Scaffold (Python/Copilot/AI)]
+    A[Draft Spec] --> B[Low-Code Scaffold w/ Python/Copilot/AI]
     B --> C[Refactor/Expand with Copilot]
     C --> D[Test & Optimize w/ AI Prompt]
     D --> E[Deploy/Automate]
