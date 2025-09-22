@@ -50,11 +50,12 @@ Agile principles inform planning and delivery, but ceremonies and tooling are mi
 - [📚 Manual Format](#manual-format)
 - [🔄 Workflow Philosophy](#workflow-philosophy)
 - [⚙️ Environment Setup](#environment-setup)
+- [🧰 New to Ubuntu](#new-to-ubuntu)
 - [🗂️ Project Planning](#project-planning)
 - [💬 Prompting Strategies](#prompting-strategies)
 - [🧩 Low-Code Patterns](#low-code-patterns)
 - [🧪 Testing and Debugging](#testing-and-debugging)
-- [4bb Coding with Copilot](#coding-with-copilot)
+- [📝 Coding with Copilot](#coding-with-copilot)
 - [🚀 Deployment and Ops](#deployment-and-ops)
 - [🧠 Model Selection](#model-selection)
 - [🧩 AI Agent Design](#ai-agent-design)
@@ -318,6 +319,213 @@ flowchart TD
 
 ---
 
+## 🧰 New to Ubuntu
+
+This section provides essential tips, shortcuts, and maintenance guidance for working effectively with Ubuntu, especially for AI development workflows.
+
+### ⌨️ Essential Keyboard Shortcuts
+
+| Shortcut            | Action                                      |
+|---------------------|---------------------------------------------|
+| `Ctrl+Alt+T`        | Open terminal                               |
+| `Super` (Windows key)| Open application launcher                   |
+| `Alt+Tab`           | Switch between applications                 |
+| `Super+Left/Right`  | Snap window to left/right half of screen    |
+| `Super+Up/Down`     | Maximize/minimize window                    |
+| `Ctrl+Alt+Arrow`    | Switch workspaces                           |
+| `Super+D`           | Show desktop (minimize all windows)         |
+| `Alt+F2`            | Run command dialog                          |
+| `Super+L`           | Lock screen                                 |
+| `Ctrl+Alt+Delete`   | Power options/log out                       |
+
+### 🖥️ Terminal Commands for System Info
+
+```bash
+# System version info
+lsb_release -a             # Ubuntu version
+uname -a                   # Kernel version and system architecture
+
+# Hardware info
+lscpu                      # CPU information
+lspci | grep -i vga        # GPU information
+free -h                    # Memory usage
+df -h                      # Disk space usage
+lsblk                      # Block devices (disks and partitions)
+sensors                    # Temperature sensors
+
+# Network info
+ip a                       # Network interfaces and IP addresses
+ss -tuln                   # Open ports
+```
+
+### 🧹 System Cleaning & Maintenance
+
+**Routine Maintenance (Weekly)**
+
+```bash
+# Update package lists and upgrade packages
+sudo apt update
+sudo apt upgrade
+
+# Remove unused packages
+sudo apt autoremove
+
+# Clean package cache
+sudo apt clean
+
+# Check disk space
+df -h
+
+# Check system journal for errors
+journalctl -p 3 -xb
+```
+
+**Deep Cleaning (Monthly)**
+
+```bash
+# Remove old kernel versions (keep last 2)
+sudo apt autoremove --purge
+
+# Clear journal logs
+sudo journalctl --vacuum-time=7d
+
+# Clean thumbnail cache
+rm -rf ~/.cache/thumbnails/*
+
+# Find large files (>100MB)
+find ~/ -type f -size +100M | sort -h
+
+# Check and repair filesystem
+sudo fsck -f /dev/sdXY  # Replace with your partition, run when unmounted
+```
+
+### 🚀 Performance Optimization
+
+**GPU-Specific (AMD)**
+
+```bash
+# Check ROCm driver status
+rocminfo
+clinfo
+
+# Monitor GPU usage
+radeontop
+watch -n 1 "rocm-smi"
+
+# Set GPU power profile for performance
+sudo bash -c "echo high > /sys/class/drm/card0/device/power_dpm_force_performance_level"
+```
+
+**System Tweaks**
+
+```bash
+# Reduce swap usage (0-100, higher means less swapping)
+sudo sysctl vm.swappiness=10
+
+# Enable CPU performance governor
+sudo apt install cpufrequtils
+sudo cpufreq-set -g performance
+
+# Temporary file cleanup
+sudo sysctl -w vm.drop_caches=3
+```
+
+### 🔧 Troubleshooting Common Issues
+
+**System Freezes**
+- Switch to TTY: `Ctrl+Alt+F3`
+- Check resources: `top` or `htop`
+- Kill processes: `killall -9 process_name`
+- Return to GUI: `Ctrl+Alt+F2`
+
+**Package Management Issues**
+```bash
+# Fix broken packages
+sudo apt --fix-broken install
+
+# Reset package database
+sudo dpkg --configure -a
+
+# Force reinstall package
+sudo apt install --reinstall package_name
+```
+
+**Display/GPU Issues**
+```bash
+# Reset GNOME settings
+dconf reset -f /org/gnome/
+
+# Restart display server (will log you out)
+sudo systemctl restart gdm
+```
+
+**Permission Problems**
+```bash
+# Fix home directory permissions
+sudo chown -R $USER:$USER $HOME
+
+# Check for files not owned by you
+find $HOME -not -user $USER
+```
+
+### 🛡️ Security Best Practices
+
+- Update system regularly: `sudo apt update && sudo apt upgrade`
+- Enable firewall: `sudo ufw enable`
+- Check for rootkits: `sudo apt install rkhunter && sudo rkhunter --check`
+- Encrypt sensitive data: `sudo apt install cryptsetup`
+- Check open ports: `sudo netstat -tulpn`
+
+### 📝 Useful Applications
+
+- **Timeshift**: System backup and restore (`sudo apt install timeshift`)
+- **Stacer**: System optimizer and monitor (`sudo apt install stacer`)
+- **Htop**: Interactive process viewer (`sudo apt install htop`)
+- **Glances**: System monitoring tool (`sudo apt install glances`)
+- **Neofetch**: System info display (`sudo apt install neofetch`)
+
+### 💾 Creating Custom Scripts
+
+Store useful scripts in `~/bin` and make them executable:
+
+```bash
+mkdir -p ~/bin
+nano ~/bin/system-check.sh
+```
+
+Example script (system-check.sh):
+```bash
+#!/bin/bash
+# System health check script
+
+echo "===== System Info ====="
+uname -a
+echo
+
+echo "===== Disk Space ====="
+df -h /
+echo
+
+echo "===== Memory Usage ====="
+free -h
+echo
+
+echo "===== CPU Usage ====="
+top -bn1 | head -20
+echo
+
+echo "===== GPU Status ====="
+rocm-smi
+```
+
+Make executable and run:
+```bash
+chmod +x ~/bin/system-check.sh
+~/bin/system-check.sh
+```
+
+---
+
 ## 🗂️ Project Planning
 
 This section shows how to plan AI-based development projects using Copilot Pro and prompt-driven low-code strategies.
@@ -334,8 +542,6 @@ This section shows how to plan AI-based development projects using Copilot Pro a
 
 1. **Draft Feature Specification**
     - **Prompt:** `draft-feature-spec`
-    - **When/Why:** At the start of any new feature (e.g. “Meeting Assistant”).
-    - **How:**  
       ```
       You are an expert product engineer helping to create a complete, high-quality feature specification.
       Ask me structured questions in sequence to gather:
@@ -346,12 +552,77 @@ This section shows how to plan AI-based development projects using Copilot Pro a
         5. Security & compliance requirements
         6. Testing expectations
         7. Documentation needs
+        8. High-level acceptance criteria: list testable outcomes and edge case coverage for feature completion.
       After gathering all answers, output a clean, copy-ready Markdown specification following the Feature Specification Guide format.
       ```
-    - **Scenario:**  
-      "I want a Meeting Assistant that summarizes Google Calendar events and emails summaries to attendees using local LLMs."
+    - **Feature Spec Template Example:**
+      ```
+      ## Feature Overview
+      - Purpose:
+      - User Story:
+      - Scope:
 
-2. **Refine Feature Specification**
+      ## Functional Requirements
+      - Inputs:
+      - Outputs:
+      - Core Logic:
+      - Edge Cases:
+
+      ## Technical Context
+      - Language:
+      - Framework:
+      - Dependencies:
+      - Environment:
+      - Performance Targets:
+
+      ## Data & Storage
+      - Schema:
+      - Persistence:
+      - Validation:
+
+      ## Security & Compliance
+      - Security Measures:
+      - Compliance Requirements:
+
+      ## Testing Expectations
+      - Required Tests:
+      - Coverage Goals:
+
+      ## Documentation Needs
+      - Usage Examples:
+      - API Docs:
+
+      ## Acceptance Criteria
+      - [ ] Clearly defined, testable outcomes for feature completion
+      - [ ] Edge case coverage
+      - [ ] Performance, security, or compliance requirements as appropriate
+      ```
+
+2. **Break Down Features into User Stories**
+    - **Prompt:**  
+      ```
+      You are an expert product manager.
+      Given a feature description, break it down into user stories in the format:
+      - As a <user type>, I want to <action/goal>, so that <value/benefit>.
+      For each user story, include:
+        - A brief Description (context, rationale, background)
+        - Detailed Acceptance Criteria (checklist covering functional, edge case, and non-functional requirements)
+      Output as a markdown table and AC checklist.
+      ```
+    - **User Stories Template (Detailed Version):**
+      ```
+      | As a... | I want to... | So that... | Description |
+      |---------|--------------|------------|-------------|
+      | ...     | ...          | ...        | ...         |
+
+      ## Acceptance Criteria
+      - [ ] AC 1
+      - [ ] AC 2
+      - [ ] AC 3
+      ```
+    - **For rapid brainstorming:** Use a simple version (table only). For robust planning, use the detailed template above.
+
+3. **Refine Feature Specification**
     - **Prompt:** `refine-feature-spec`
     - **When/Why:** After your initial spec, before starting code.
     - **How:**  
@@ -363,9 +634,9 @@ This section shows how to plan AI-based development projects using Copilot Pro a
       Suggest specific additions or changes, then output the improved specification in clean Markdown.
       ```
     - **Scenario:**  
-      “Here’s my meeting assistant spec. What’s missing? Where could it be clearer?”
+      "Here's my meeting assistant spec. What's missing? Where could it be clearer?"
 
-3. **Scaffold Project Structure**
+4. **Scaffold Project Structure**
     - **Prompt:**  
       ```
       "Suggest a folder structure for a meeting assistant that uses local LLMs."
@@ -383,12 +654,6 @@ This section shows how to plan AI-based development projects using Copilot Pro a
       │   └── test_main.py
       ├── data/
       └── docs/
-      ```
-
-4. **Break Down Features into User Stories**
-    - **Prompt:**  
-      ```
-      "Break down the calendar integration into user stories and implementation tasks."
       ```
 
 5. **Task Board Generation**
@@ -631,11 +896,11 @@ Save useful testing and debugging prompts in a `/prompts/testing-debugging.md` f
 
 ---
 
-## 4bb Coding with Copilot
+## 📝 Coding with Copilot
 
 This section covers how to use GitHub Copilot Pro effectively for writing, editing, and understanding code. It includes inline suggestions, Copilot Chat workflows, and best practices.
 
-### 4a1 Inline Suggestions
+### Inline Suggestions
 
 Copilot provides real-time code completions as you type:
 - Use comments to guide suggestions
@@ -647,7 +912,7 @@ Copilot provides real-time code completions as you type:
 # Create a function to fetch weather data from OpenWeather API
 ```
 
-### 4ac Copilot Chat Workflows
+### Copilot Chat Workflows
 
 Use Copilot Chat to:
 - Ask questions about code
@@ -662,21 +927,21 @@ Use Copilot Chat to:
 "Generate unit tests for this module."
 ```
 
-### 4dd Best Practices
+### Best Practices
 
 - Keep prompts specific and contextual
 - Use comments to guide inline suggestions
 - Review and edit Copilot-generated code
 - Use Copilot Chat for planning and debugging
 
-### 4c3 Copilot Labs (Optional)
+### Copilot Labs (Optional)
 
 Explore experimental features:
 - Code translation (e.g., Python to JavaScript)
 - Test generation
 - Brush and explain modes
 
-### 4cc Recommendations
+### Recommendations
 
 - Use Copilot for repetitive or boilerplate tasks
 - Combine inline suggestions with Chat for full workflows
@@ -1060,7 +1325,19 @@ All prompts used in this manual, organized for quick reference:
       5. Security & compliance requirements
       6. Testing expectations
       7. Documentation needs
+      8. High-level acceptance criteria: list testable outcomes and edge case coverage for feature completion.
     After gathering all answers, output a clean, copy-ready Markdown specification following the Feature Specification Guide format.
+- name: user-stories-detailed
+  description: Break down a feature into detailed user stories with description and acceptance criteria
+  model: llama3
+  prompt: |
+    You are an expert product manager.
+    Given a feature description, break it down into user stories in the format:
+    - As a <user type>, I want to <action/goal>, so that <value/benefit>.
+    For each user story, include:
+      - A brief Description (context, rationale, background)
+      - Detailed Acceptance Criteria (checklist covering functional, edge case, and non-functional requirements)
+    Output as a markdown table and AC checklist.
 - name: refine-feature-spec
   description: Review and improve an existing feature specification
   model: llama3
@@ -1102,6 +1379,16 @@ All prompts used in this manual, organized for quick reference:
     Diagnose any issues with the current environment setup, referencing the baseline specs and captured outputs.
     Identify mismatches, missing dependencies, or known issues for the OS, kernel, GPU, ROCm, and primary packages.
     Recommend step-by-step fixes.
+- name: ubuntu-system-maintenance
+  description: Generate commands for Ubuntu system maintenance and optimization
+  model: codellama13b
+  prompt: |
+    Generate a comprehensive list of commands for Ubuntu system maintenance:
+    - System updates and package management
+    - Disk cleanup and space optimization
+    - Performance monitoring and tuning
+    - Security checks and hardening
+    Format as a markdown guide with explanations for each command.
 ```
 ---
 
