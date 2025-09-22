@@ -743,8 +743,8 @@ This section shows how to plan AI-based development projects using Copilot Pro a
 
 ```mermaid
 flowchart TD
-    A[Feature Idea/Request] --> B[Draft Spec (AI prompt)]
-    B --> C[Refine Spec (AI prompt)]
+    A[Feature Idea/Request] --> B[Draft Spec w/ AI Prompt]
+    B --> C[Refine Spec w/ AI Prompt]
     C --> D[Scaffold Project Structure]
     D --> E[Break Down Features]
     E --> F[Create Task Board]
@@ -871,7 +871,7 @@ Robust strategies for building AI applications using low-code workflows and AI a
   *Workflow:*  
   - Draft spec
   - Use AI prompts for scaffolding and code generation
-  - Self-review and test (AI prompt)
+  - Self-review and test w/ AI Prompt
   - Deploy and automate
 
 - **Copilot Refactoring**
@@ -894,7 +894,7 @@ Robust strategies for building AI applications using low-code workflows and AI a
 flowchart TD
     A[Draft Spec] --> B[Low-Code Scaffold (Python/Copilot/AI)]
     B --> C[Refactor/Expand with Copilot]
-    C --> D[Test & Optimize (AI prompt)]
+    C --> D[Test & Optimize w/ AI Prompt]
     D --> E[Deploy/Automate]
 ```
 
