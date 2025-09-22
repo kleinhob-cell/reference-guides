@@ -149,7 +149,6 @@ As environments are upgraded, run verification steps and capture outputs for rep
 | clinfo    | Device: gfx1100 …                              | 2025-09-21 |
 | pip show  | ctranslate2 4.4.0 / faster-whisper 1.2.0       | 2025-09-21 |
 
-
 ---
 
 ## 🛠️ Development Style {#development-style}
@@ -486,7 +485,6 @@ sudo sysctl -w vm.drop_caches=3
 ```
 
 ### 🔧 Troubleshooting Common Issues
-
 
 #### System Freezes
 
@@ -1372,18 +1370,15 @@ Each entry includes:
 
 **What I Learned:**
 
-
 - How to install and configure GitHub Copilot Pro
 - How to use inline suggestions and Copilot Chat
 
 **Challenges Faced:**
 
-
 - Initial confusion with SSH Remote setup
 - Needed to adjust VS Code settings for optimal performance
 
 **Next Steps:**
-
 
 - Document SSH setup in environment section
 - Explore Copilot Labs features
