@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD046 -->
 # 🧑‍💻 AI Development Workflow Manual: Master Sheet
 
 Welcome to my AI Development Workflow Manual — a living guide documenting my journey from low-code to advanced AI development. This manual is designed to be both a personal learning companion and a shareable playbook for building intelligent applications using modern tools like GitHub Copilot Pro, Ollama, LangChain, and more.
@@ -43,28 +44,32 @@ Agile principles inform planning and delivery, but ceremonies and tooling are mi
 
 ## 📖 Table of Contents
 
-- [🎯 Purpose](#-purpose)
-- [🧭 Development Environment](#-development-environment)
-- [🛠️ Development Style](#-development-style)
-- [📦 Initial Projects](#-initial-projects)
-- [📚 Manual Format](#-manual-format)
-- [🔄 Workflow Philosophy](#-workflow-philosophy)
-- [⚙️ Environment Setup](#-environment-setup)
-- [🧰 New to Ubuntu](#-new-to-ubuntu)
-- [🗂️ Project Planning](#-project-planning)
-- [💬 Prompting Strategies](#-prompting-strategies)
-- [🧩 Low-Code Patterns](#-low-code-patterns)
-- [🧪 Testing and Debugging](#-testing-and-debugging)
-- [📝 Coding with Copilot](#-coding-with-copilot)
-- [🚀 Deployment and Ops](#-deployment-and-ops)
-- [🧠 Model Selection](#-model-selection)
-- [🧩 AI Agent Design](#-ai-agent-design)
-- [📓 Learning Journal](#-learning-journal)
-- [📚 Prompt Library](#-prompt-library)
+- [🎯 Purpose](#purpose)
+- [🧭 Development Environment](#development-environment)
+- [🛠️ Development Style](#development-style)
+- [📦 Initial Projects](#initial-projects)
+- [📚 Manual Format](#manual-format)
+- [🔄 Workflow Philosophy](#workflow-philosophy)
+- [⚙️ Environment Setup](#environment-setup)
+- [🧰 New to Ubuntu](#new-to-ubuntu)
+- [🗂️ Project Planning](#project-planning)
+- [💬 Prompting Strategies](#prompting-strategies)
+- [🧩 Low-Code Patterns](#low-code-patterns)
+- [🧪 Testing and Debugging](#testing-and-debugging)
+- [📝 Coding with Copilot](#coding-with-copilot)
+- [🚀 Deployment and Ops](#deployment-and-ops)
+- [📊 Decision Frameworks](#decision-frameworks)
+- [🔬 Burn-in & Promotion Workflow](#burn-in-promotion-workflow)
+- [🛡️ Ops Guardrails & Risk Management](#ops-guardrails-risk-management)
+- [🗒️ Docs Update Checklist](#docs-update-checklist)
+- [🧠 Model Selection](#model-selection)
+- [🧩 AI Agent Design](#ai-agent-design)
+- [📓 Learning Journal](#learning-journal)
+- [📚 Prompt Library](#prompt-library)
 
 ---
 
-## 🎯 Purpose
+## 🎯 Purpose {#purpose}
 
 This manual serves three core purposes:
 
@@ -79,9 +84,27 @@ This manual serves three core purposes:
 
 ---
 
-## 🧭 Development Environment
+## � Documentation Conventions {#documentation-conventions}
+
+To keep this playbook consistent and lint‑clean across renderers:
+
+- Headings use explicit IDs: add `{#section-id}` to every H2+ that is linked in the ToC (stabilizes anchors across GitHub/Docs).
+- Fenced code blocks always declare a language. Use:
+  - `text` for prompts and natural language snippets
+  - `bash`, `python`, `dockerfile`, `yaml`, `mermaid`, `makefile` as applicable
+  - Surround every fence with a blank line before and after
+- Lists are surrounded by blank lines; nested bullets use consistent two‑space indentation only when truly nested.
+- Makefile examples must keep hard tabs in recipes. Wrap those fences with `<!-- markdownlint-disable MD010 -->` / `<!-- markdownlint-enable MD010 -->` locally.
+- Avoid duplicate headings: disambiguate with contextual suffixes, e.g., “Recommendations (Deployment)”.
+
+These conventions mirror markdownlint rules: MD051, MD024, MD031, MD032, MD040, MD010, MD036, MD047.
+
+---
+
+## �🧭 Development Environment {#development-environment}
 
 **Primary Workstation:** Ubuntu 24.04.3 LTS  
+
 - AMD Ryzen 7 9700X, AMD RX 7900 XTX (ROCm-enabled), dual NVMe storage  
 - VS Code with GitHub Copilot Pro  
 - Ollama for local model hosting  
@@ -89,18 +112,21 @@ This manual serves three core purposes:
 - Setup scripts, configs, and baseline captured in `/setup` and `/specs` folders
 
 **Remote Access:** MacBook Pro  
+
 - Connected via VS Code SSH Remote  
 - RDP (Remote Desktop Protocol) for full GUI access to the Ubuntu workstation  
   - Install xrdp on Ubuntu, open port 3389, use Microsoft Remote Desktop client on MacBook Pro  
   - Enables direct GUI dev, running VS Code and tools as if local
 
-**Environment Verification & Baseline Management**
+### Environment Verification & Baseline Management
 
 As environments are upgraded, run verification steps and capture outputs for reproducibility and troubleshooting.
 
-> **Prompt:**  
+> **Prompt:**
+>
 > Use the `environment-verify` prompt after any major upgrade or adjustment:
-> ```
+>
+> ```text
 > Verify the current environment setup by running and capturing outputs for:
 > - uname -r
 > - rocminfo | grep -i gfx
@@ -109,12 +135,13 @@ As environments are upgraded, run verification steps and capture outputs for rep
 > Summarize differences from previous baseline and flag any non-conformant results.
 > Output a markdown table with captured outputs and dates.
 > ```
->  
+>
 > **When/Why:** After kernel, ROCm, or package upgrades; before/after burn-in; when prepping for deployment or troubleshooting.
->  
+>
 > **How:** Run the commands, paste results into your specs table, and use the prompt to generate a summary and flag issues.
 
 **Sample Output Table:**
+
 | Command   | Output (truncated as needed)                   | Date       |
 |-----------|------------------------------------------------|------------|
 | uname -r  | 6.11.0-1027-oem                               | 2025-09-21 |
@@ -122,22 +149,24 @@ As environments are upgraded, run verification steps and capture outputs for rep
 | clinfo    | Device: gfx1100 …                              | 2025-09-21 |
 | pip show  | ctranslate2 4.4.0 / faster-whisper 1.2.0       | 2025-09-21 |
 
+
 ---
 
-## 🛠️ Development Style
+## 🛠️ Development Style {#development-style}
 
 - **Primary Approach:** Low-code development using Python, Copilot, modular design, and AI-assisted tools  
 - **Primary Assistant:** GitHub Copilot Pro  
 - **Long-Term Vision:** Build a custom AI Dev Agent integrated into VS Code
 
 **Low-Code Strategy:**
+
 - Use Python, Copilot, and advanced libraries to build, refactor, and automate.
 - Modularize code for reusability and maintainability.
 - Drive development with prompt-driven workflows and AI-powered automation.
 
 ---
 
-## 📦 Initial Projects
+## 📦 Initial Projects {#initial-projects}
 
 The manual documents multiple AI-based applications, starting with:
 
@@ -155,10 +184,11 @@ Each project includes architecture, workflow, and prompt-driven development logs
 
 ---
 
-## 📚 Manual Format
+## 📚 Manual Format {#manual-format}
 
 - **Markdown-based GitHub repository**  
 - **Narrative guide style** with embedded modular references  
+
 - **Reference files** for:
   - Prompt templates  
   - Tool setup guides  
@@ -168,14 +198,14 @@ Each project includes architecture, workflow, and prompt-driven development logs
 
 ---
 
-## 🔄 Workflow Philosophy
+## 🔄 Workflow Philosophy {#workflow-philosophy}
 
 - Agile, iterative development  
 - Document-as-you-go  
 - Clarity, reproducibility, shareability  
 - Continuous benchmarking against Copilot Pro
 
-**Mermaid Diagram: Prompt-Driven Development Workflow**
+### Mermaid Diagram: Prompt-Driven Development Workflow
 
 ```mermaid
 flowchart TD
@@ -189,48 +219,55 @@ flowchart TD
 
 ---
 
-## ⚙️ Environment Setup
+## ⚙️ Environment Setup {#environment-setup}
 
 ### 🖥️ Primary Workstation: Ubuntu 24.04.3 LTS
 
-**Hardware Specs**
+#### Hardware Specs
+
 - AMD Ryzen 7 9700X
 - AMD RX 7900 XTX (ROCm-enabled)
 - Dual NVMe storage
 
-**Software Stack**
+#### Software Stack
+
 - VS Code (Copilot Pro, Copilot Labs, Python, ESLint/Prettier, Remote SSH)
 - Python 3.11+, Node.js, Git, Docker (recommended)
 - Ollama (local model hosting)
 - LangChain / LlamaIndex
 
-**Setup Steps**
+#### Setup Steps
+
 1. Install VS Code and extensions.
 2. Install Python and Node.js.
 3. Install Git and Docker.
 4. Set up Ollama (see [ollama.com](https://ollama.com)).
 5. Clone repo and initialize workspace.
 
-**Environment Verification & Troubleshooting**
+#### Environment Verification & Troubleshooting
 
-> **Prompt:**  
+> **Prompt:**
+>
 > After setup/upgrade, use `environment-verify` and `baseline-troubleshoot`:
-> ```
+>
+> ```text
 > Diagnose any issues with the current environment setup, referencing the baseline specs and captured outputs.
 > Identify mismatches, missing dependencies, or known issues for the OS, kernel, GPU, ROCm, and primary packages.
 > Recommend step-by-step fixes.
 > ```
->  
+>
 > **Scenario:** After upgrading ROCm, run the verification, capture outputs, and use this prompt to have your AI assistant flag and fix any issues.
 
-**Promotion to Stable**
+#### Promotion to Stable
 
-> **Prompt:**  
-> ```
+> **Prompt:**
+>
+> ```text
 > Summarize burn-in and guardrail results for the current baseline.
 > Recommend whether to promote to Stable, with rationale and next steps.
 > Output a markdown checklist for promotion steps.
 > ```
+>
 > Use after all tests pass; helps formalize environment management.
 
 ---
@@ -239,65 +276,83 @@ flowchart TD
 
 #### VS Code SSH Remote
 
-**Setup**
+#### Setup (SSH Remote)
+
 - Use VS Code Remote SSH extension.
 - Configure SSH keys and firewall rules for secure CLI and code access.
 
-**Scenario & Workflow:**  
+#### Scenario & Workflow
+
 After configuring SSH, use this prompt to generate step-by-step documentation and troubleshooting guidance:
-```
+
+```text
 Generate documentation for setting up VS Code Remote SSH access from MacBook Pro to Ubuntu workstation, including SSH key creation, firewall configuration, and typical troubleshooting steps.
 ```
-**When/Why:**  
+
+#### When/Why (SSH Remote)
+
 Use for seamless remote CLI/code development, especially when you need shell access, file edits, or Copilot-driven workflows.
 
 #### RDP (Remote Desktop Protocol) for Full GUI Access
 
-**Setup**
+#### Setup (RDP)
+
 - Install and configure an RDP server on Ubuntu (e.g., xrdp).
 - Ensure firewall allows RDP traffic (default port 3389).
 - Use Microsoft Remote Desktop client on MacBook Pro to connect.
 
-**Step-by-Step Example:**
-1. **Install xrdp on Ubuntu:**
-   ```bash
-   sudo apt update
-   sudo apt install xrdp
-   sudo systemctl enable xrdp
-   sudo systemctl start xrdp
-   ```
-2. **(Optional) Configure your firewall:**
-   ```bash
-   sudo ufw allow 3389/tcp
-   ```
-3. **Verify xrdp is running:**
-   ```bash
-   systemctl status xrdp
-   ```
-4. **Connect from MacBook Pro:**
-   - Open Microsoft Remote Desktop (free in Mac App Store).
-   - Add a new PC, enter your Ubuntu workstation's IP and credentials.
-   - Connect for full GUI access to your Ubuntu desktop.
+#### Step-by-Step Example (RDP)
 
-**Prompt to Generate Troubleshooting Guide:**
+1. **Install xrdp on Ubuntu:**
+
+```bash
+  sudo apt update
+  sudo apt install xrdp
+  sudo systemctl enable xrdp
+  sudo systemctl start xrdp
 ```
+
+1. **(Optional) Configure your firewall:**
+
+  ```bash
+  sudo ufw allow 3389/tcp
+  ```
+
+1. **Verify xrdp is running:**
+
+  ```bash
+  systemctl status xrdp
+  ```
+
+1. **Connect from MacBook Pro:**
+
+- Open Microsoft Remote Desktop (free in Mac App Store).
+- Add a new PC, enter your Ubuntu workstation's IP and credentials.
+- Connect for full GUI access to your Ubuntu desktop.
+
+#### Prompt to Generate Troubleshooting Guide (RDP)
+
+```text
 Generate a troubleshooting guide for xrdp remote desktop connection issues between MacBook Pro and Ubuntu workstation, including firewall, authentication, and desktop environment compatibility.
 ```
-**When/Why:**  
+
+#### When/Why (RDP)
+
 Use RDP when you need graphical access to Ubuntu apps, VS Code with full extensions, or to run/monitor GUI-based tools.
 
-**Integrated Workflow:**
+#### Integrated Workflow (Remote Access)
+
 - Use SSH Remote for lightweight remote dev and CLI tasks.
 - Use RDP for GUI development, debugging, and workflow visualization.
 
-**Mermaid Diagram: Remote Access Flow**
+### Mermaid Diagram: Remote Access Flow
 
 ```mermaid
 flowchart TD
-    A[MacBook Pro] -->|SSH Remote| B[Ubuntu Workstation CLI/VS Code]
-    A -->|RDP| C[Ubuntu Desktop GUI]
-    B --> D[Copilot/Coding/Automation]
-    C --> E[GUI Tools/Agent Demos]
+   A[MacBook Pro] -->|SSH Remote| B[Ubuntu Workstation CLI/VS Code]
+   A -->|RDP| C[Ubuntu Desktop GUI]
+   B --> D[Copilot/Coding/Automation]
+   C --> E[GUI Tools/Agent Demos]
 ```
 
 ---
@@ -319,7 +374,7 @@ flowchart TD
 
 ---
 
-## 🧰 New to Ubuntu
+## 🧰 New to Ubuntu {#new-to-ubuntu}
 
 This section provides essential tips, shortcuts, and maintenance guidance for working effectively with Ubuntu, especially for AI development workflows.
 
@@ -360,7 +415,7 @@ ss -tuln                   # Open ports
 
 ### 🧹 System Cleaning & Maintenance
 
-**Routine Maintenance (Weekly)**
+#### Routine Maintenance (Weekly)
 
 ```bash
 # Update package lists and upgrade packages
@@ -380,7 +435,7 @@ df -h
 journalctl -p 3 -xb
 ```
 
-**Deep Cleaning (Monthly)**
+#### Deep Cleaning (Monthly)
 
 ```bash
 # Remove old kernel versions (keep last 2)
@@ -401,7 +456,7 @@ sudo fsck -f /dev/sdXY  # Replace with your partition, run when unmounted
 
 ### 🚀 Performance Optimization
 
-**GPU-Specific (AMD)**
+#### GPU-Specific (AMD)
 
 ```bash
 # Check ROCm driver status
@@ -416,7 +471,7 @@ watch -n 1 "rocm-smi"
 sudo bash -c "echo high > /sys/class/drm/card0/device/power_dpm_force_performance_level"
 ```
 
-**System Tweaks**
+#### System Tweaks
 
 ```bash
 # Reduce swap usage (0-100, higher means less swapping)
@@ -432,13 +487,20 @@ sudo sysctl -w vm.drop_caches=3
 
 ### 🔧 Troubleshooting Common Issues
 
-**System Freezes**
+
+#### System Freezes
+
+- Switch to TTY: `Ctrl+Alt+F3`
+- Check resources: `top` or `htop`
+- Kill processes: `killall -9 process_name`
+- Return to GUI: `Ctrl+Alt+F2`
 - Switch to TTY: `Ctrl+Alt+F3`
 - Check resources: `top` or `htop`
 - Kill processes: `killall -9 process_name`
 - Return to GUI: `Ctrl+Alt+F2`
 
-**Package Management Issues**
+#### Package Management Issues
+
 ```bash
 # Fix broken packages
 sudo apt --fix-broken install
@@ -450,7 +512,8 @@ sudo dpkg --configure -a
 sudo apt install --reinstall package_name
 ```
 
-**Display/GPU Issues**
+#### Display/GPU Issues
+
 ```bash
 # Reset GNOME settings
 dconf reset -f /org/gnome/
@@ -459,7 +522,8 @@ dconf reset -f /org/gnome/
 sudo systemctl restart gdm
 ```
 
-**Permission Problems**
+#### Permission Problems
+
 ```bash
 # Fix home directory permissions
 sudo chown -R $USER:$USER $HOME
@@ -494,6 +558,7 @@ nano ~/bin/system-check.sh
 ```
 
 Example script (system-check.sh):
+
 ```bash
 #!/bin/bash
 # System health check script
@@ -519,6 +584,7 @@ rocm-smi
 ```
 
 Make executable and run:
+
 ```bash
 chmod +x ~/bin/system-check.sh
 ~/bin/system-check.sh
@@ -526,7 +592,7 @@ chmod +x ~/bin/system-check.sh
 
 ---
 
-## 🗂️ Project Planning
+## 🗂️ Project Planning {#project-planning}
 
 This section shows how to plan AI-based development projects using Copilot Pro and prompt-driven low-code strategies.
 
@@ -541,8 +607,10 @@ This section shows how to plan AI-based development projects using Copilot Pro a
 **Workflow:**
 
 1. **Draft Feature Specification**
-    - **Prompt:** `draft-feature-spec`
-      ```
+
+- **Prompt:** `draft-feature-spec`
+
+```text
       You are an expert product engineer helping to create a complete, high-quality feature specification.
       Ask me structured questions in sequence to gather:
         1. Feature overview (purpose, user story, scope)
@@ -554,9 +622,11 @@ This section shows how to plan AI-based development projects using Copilot Pro a
         7. Documentation needs
         8. High-level acceptance criteria: list testable outcomes and edge case coverage for feature completion.
       After gathering all answers, output a clean, copy-ready Markdown specification following the Feature Specification Guide format.
-      ```
-    - **Feature Spec Template Example:**
-      ```
+```
+
+- **Feature Spec Template Example:**
+
+```markdown
       ## Feature Overview
       - Purpose:
       - User Story:
@@ -596,11 +666,13 @@ This section shows how to plan AI-based development projects using Copilot Pro a
       - [ ] Clearly defined, testable outcomes for feature completion
       - [ ] Edge case coverage
       - [ ] Performance, security, or compliance requirements as appropriate
-      ```
+```
 
-2. **Break Down Features into User Stories**
-    - **Prompt:**  
-      ```
+1. **Break Down Features into User Stories**
+
+- **Prompt:**  
+
+```text
       You are an expert product manager.
       Given a feature description, break it down into user stories in the format:
       - As a <user type>, I want to <action/goal>, so that <value/benefit>.
@@ -608,9 +680,11 @@ This section shows how to plan AI-based development projects using Copilot Pro a
         - A brief Description (context, rationale, background)
         - Detailed Acceptance Criteria (checklist covering functional, edge case, and non-functional requirements)
       Output as a markdown table and AC checklist.
-      ```
-    - **User Stories Template (Detailed Version):**
-      ```
+```
+
+- **User Stories Template (Detailed Version):**
+
+```markdown
       | As a... | I want to... | So that... | Description |
       |---------|--------------|------------|-------------|
       | ...     | ...          | ...        | ...         |
@@ -619,31 +693,39 @@ This section shows how to plan AI-based development projects using Copilot Pro a
       - [ ] AC 1
       - [ ] AC 2
       - [ ] AC 3
-      ```
-    - **For rapid brainstorming:** Use a simple version (table only). For robust planning, use the detailed template above.
+```
 
-3. **Refine Feature Specification**
-    - **Prompt:** `refine-feature-spec`
-    - **When/Why:** After your initial spec, before starting code.
-    - **How:**  
-      ```
+- **For rapid brainstorming:** Use a simple version (table only). For robust planning, use the detailed template above.
+
+1. **Refine Feature Specification**
+
+- **Prompt:** `refine-feature-spec`
+- **When/Why:** After your initial spec, before starting code.
+- **How:**  
+
+```text
       Review the provided feature specification for:
       - Missing or unclear details
       - Ambiguities that could cause incorrect implementation
       - Opportunities to improve clarity, completeness, and testability
       Suggest specific additions or changes, then output the improved specification in clean Markdown.
-      ```
-    - **Scenario:**  
-      "Here's my meeting assistant spec. What's missing? Where could it be clearer?"
+```
 
-4. **Scaffold Project Structure**
-    - **Prompt:**  
-      ```
+- **Scenario:**  
+  "Here's my meeting assistant spec. What's missing? Where could it be clearer?"
+
+1. **Scaffold Project Structure**
+
+- **Prompt:**  
+
+```text
       "Suggest a folder structure for a meeting assistant that uses local LLMs."
-      ```
-    - **Scenario:**  
-      Copilot generates:
-      ```
+```
+
+- **Scenario:**  
+  Copilot generates:
+
+```text
       meeting-assistant/
       ├── README.md
       ├── src/
@@ -652,14 +734,15 @@ This section shows how to plan AI-based development projects using Copilot Pro a
       │   └── summarizer.py
       ├── tests/
       │   └── test_main.py
-      ├── data/
+  ├── data/
       └── docs/
-      ```
+```
 
-5. **Task Board Generation**
+1. **Task Board Generation**
     - Use Copilot to create TODOs and planning boards.
 
-**Mermaid Diagram: Planning Workflow**
+#### Mermaid Diagram: Planning Workflow
+
 ```mermaid
 flowchart TD
     A[Feature Idea/Request] --> B[Draft Spec (AI prompt)]
@@ -670,13 +753,14 @@ flowchart TD
 ```
 
 **Recommendations:**
+
 - Use GitHub Projects or Issues to track tasks.
 - Save planning prompt/response pairs in `/planning` for future reuse.
 - Review and refine Copilot-generated plans before implementation.
 
 ---
 
-## 💬 Prompting Strategies
+## 💬 Prompting Strategies {#prompting-strategies}
 
 Explore how to write effective prompts for Copilot Pro and other AI tools to maximize productivity and code quality.
 
@@ -691,45 +775,55 @@ Explore how to write effective prompts for Copilot Pro and other AI tools to max
 
 1. **Task Prompts**
     - **Prompt:**  
-      ```
+
+      ```text
       "Create a Python function that fetches weather data from OpenWeather API."
       ```
+
     - **Scenario:**  
       Use for discrete coding tasks; Copilot generates code function.
 
 2. **Planning Prompts**
     - **Prompt:**  
-      ```
+
+      ```text
       "Suggest a folder structure for a meeting assistant that uses local LLMs."
       ```
+
     - **Scenario:**  
       For scaffolding and architecture guidance.
 
 3. **Debugging Prompts**
     - **Prompt:**  
-      ```
+
+      ```text
       "Why is this function returning None instead of a string?"
       ```
+
     - **Scenario:**  
       Use when you hit bugs; Copilot diagnoses and suggests fixes.
 
 4. **Explanation Prompts**
     - **Prompt:**  
-      ```
+
+      ```text
       "Explain what this regex pattern does."
       ```
+
     - **Scenario:**  
       For learning and documentation.
 
 ### Context-Aware Prompting
 
 Copilot performs better with context:
+
 - Reference variables, modules, file names.
 - Use descriptive comments:
-  ```python
-  # Fetch weather data from OpenWeather API
-  # Include error handling and logging
-  ```
+
+```python
+# Fetch weather data from OpenWeather API
+# Include error handling and logging
+```
 
 ### Prompt Testing & Library
 
@@ -737,7 +831,7 @@ Copilot performs better with context:
 - Save successful prompts in `/prompts`.
 - Document prompt/response pairs for reuse.
 
-### Recommendations
+### Recommendations (Prompting Strategies)
 
 - Build a categorized prompt library.
 - Use Copilot Chat for exploratory prompting.
@@ -745,7 +839,7 @@ Copilot performs better with context:
 
 ---
 
-## 🧩 Low-Code Patterns
+## 🧩 Low-Code Patterns {#low-code-patterns}
 
 Robust strategies for building AI applications using low-code workflows and AI assistance.
 
@@ -759,16 +853,20 @@ Robust strategies for building AI applications using low-code workflows and AI a
 
 - **Function Templates**
   *Prompt:*  
-  ```
+
+  ```text
   # Summarize meeting transcript using local LLM
   ```
+  
   *Scenario:* Generate reusable Python functions for meeting summarization.
 
 - **Modular File Structure**
   *Prompt:*  
-  ```
+
+  ```text
   "Create a class that manages calendar events and integrates with Google Calendar API."
   ```
+  
   *Scenario:* Build modular, maintainable codebases.
 
 - **Prompt-Driven Development**
@@ -780,7 +878,8 @@ Robust strategies for building AI applications using low-code workflows and AI a
 
 - **Copilot Refactoring**
   *Prompt:*  
-  ```
+
+  ```text
   Refactor the provided code to:
     - Improve naming and structure
     - Reduce complexity
@@ -788,9 +887,10 @@ Robust strategies for building AI applications using low-code workflows and AI a
     - Preserve all functionality
   Output only the refactored code.
   ```
+  
   *Scenario:* Simplify and clean up code as the project matures.
 
-**Mermaid Diagram: Low-Code Development Workflow**
+### Mermaid Diagram: Low-Code Development Workflow
 
 ```mermaid
 flowchart TD
@@ -804,7 +904,8 @@ flowchart TD
 
 - Generate unit tests for each module:
   *Prompt:*  
-  ```
+
+  ```text
   Write comprehensive unit tests for the provided code.
   - Cover normal, edge, and error cases.
   - Use pytest style unless otherwise specified.
@@ -823,7 +924,7 @@ flowchart TD
 **Scenario:**  
 Build a Meeting Assistant agent that chains calendar integration, transcript summarization, and email sending.
 
-**Recommendations**
+### Recommendations (Low-Code Patterns)
 
 - Document each pattern with purpose and usage.
 - Use Mermaid diagrams to visualize workflows.
@@ -831,7 +932,7 @@ Build a Meeting Assistant agent that chains calendar integration, transcript sum
 
 ---
 
-## 🧪 Testing and Debugging
+## 🧪 Testing and Debugging {#testing-and-debugging}
 
 This section covers how to use Copilot Pro and other tools to write tests, identify bugs, and debug code effectively in low-code AI workflows.
 
@@ -845,17 +946,20 @@ This section covers how to use Copilot Pro and other tools to write tests, ident
 ### 🧪 Writing Tests with Copilot
 
 Use Copilot Chat to:
+
 - Generate unit tests for functions and modules
 - Suggest edge cases and input variations
 - Create test files and organize them in `/tests`
 
 **Example Prompt:**
-```
+
+```text
 "Generate unit tests for a function that summarizes meeting transcripts."
 ```
 
 **Example Structure:**
-```
+
+```text
 tests/
 ├── test_main.py
 ├── test_calendar_integration.py
@@ -865,12 +969,14 @@ tests/
 ### 🐞 Debugging with Copilot
 
 Use Copilot Chat to:
+
 - Explain error messages
 - Suggest fixes and refactoring
 - Identify logic flaws or missing conditions
 
 **Example Prompts:**
-```
+
+```text
 "Explain what this function does."
 "Refactor this to use async/await."
 "Generate unit tests for this module."
@@ -896,18 +1002,20 @@ Save useful testing and debugging prompts in a `/prompts/testing-debugging.md` f
 
 ---
 
-## 📝 Coding with Copilot
+## 📝 Coding with Copilot {#coding-with-copilot}
 
 This section covers how to use GitHub Copilot Pro effectively for writing, editing, and understanding code. It includes inline suggestions, Copilot Chat workflows, and best practices.
 
 ### Inline Suggestions
 
 Copilot provides real-time code completions as you type:
+
 - Use comments to guide suggestions
 - Write descriptive function headers
 - Let Copilot autocomplete boilerplate code
 
 **Example:**
+
 ```python
 # Create a function to fetch weather data from OpenWeather API
 ```
@@ -915,13 +1023,15 @@ Copilot provides real-time code completions as you type:
 ### Copilot Chat Workflows
 
 Use Copilot Chat to:
+
 - Ask questions about code
 - Request refactoring or optimization
 - Generate tests and edge cases
 - Troubleshoot bugs and errors
 
 **Example Prompts:**
-```
+
+```text
 "Explain what this function does."
 "Refactor this to use async/await."
 "Generate unit tests for this module."
@@ -937,11 +1047,12 @@ Use Copilot Chat to:
 ### Copilot Labs (Optional)
 
 Explore experimental features:
+
 - Code translation (e.g., Python to JavaScript)
 - Test generation
 - Brush and explain modes
 
-### Recommendations
+### Recommendations (Copilot Usage)
 
 - Use Copilot for repetitive or boilerplate tasks
 - Combine inline suggestions with Chat for full workflows
@@ -949,7 +1060,7 @@ Explore experimental features:
 
 ---
 
-## 🚀 Deployment and Ops
+## 🚀 Deployment and Ops {#deployment-and-ops}
 
 This section outlines strategies for deploying AI-based applications and managing operations, including local hosting, remote access, and automation.
 
@@ -966,6 +1077,7 @@ This section outlines strategies for deploying AI-based applications and managin
 - Run agents and services via terminal or task runners
 
 **Example:**
+
 ```bash
 python src/main.py
 ```
@@ -977,6 +1089,7 @@ python src/main.py
 - Use secure SSH keys and firewall rules
 
 **Example:**
+
 ```bash
 ssh user@your-ubuntu-ip
 ```
@@ -988,6 +1101,7 @@ ssh user@your-ubuntu-ip
 - Use `docker-compose` for multi-service orchestration
 
 **Example Dockerfile:**
+
 ```Dockerfile
 FROM python:3.11
 WORKDIR /app
@@ -1002,7 +1116,10 @@ CMD ["python", "src/main.py"]
 - Automate testing, deployment, and updates
 
 **Example Makefile:**
-```Makefile
+
+<!-- markdownlint-disable MD010 -->
+
+```makefile
 run:
 	python src/main.py
 
@@ -1010,13 +1127,15 @@ test:
 	pytest tests/
 ```
 
+<!-- markdownlint-enable MD010 -->
+
 ### 📈 Monitoring and Logging
 
 - Use Python `logging` module for diagnostics
 - Track performance and errors
 - Document known issues and resolutions
 
-### ✅ Recommendations
+### ✅ Recommendations (Deployment)
 
 - Maintain a `/deployment` folder with scripts and configs
 - Document setup steps and troubleshooting tips
@@ -1024,7 +1143,92 @@ test:
 
 ---
 
-## 🧠 Model Selection
+## 📊 Decision Frameworks {#decision-frameworks}
+
+Use a lightweight scoring model when pinning versions or choosing components.
+
+- Scoring criteria (1–5): Latency Fit, Accuracy Fit, Maintainability Fit
+- Weights: Latency 40%, Accuracy 40%, Maintainability 20%
+- Data sources: quick benchmarks, logs, public release notes
+- Decision rules:
+  - Stable = highest weighted total ≥ 4.0 with no recent P1/P2 issues
+  - Newest = latest GA within 0.4 of Stable and passes smoke tests
+
+Quick prompt
+
+```text
+Given candidates A/B for <component>, score 1–5 on Latency, Accuracy, Maintainability.
+Apply weights 40/40/20 and recommend Stable/Newest with 2 risks + mitigations.
+```
+
+---
+
+## 🔬 Burn-in & Promotion Workflow {#burn-in-promotion-workflow}
+
+Goal: Prove the baseline before calling it Stable.
+
+Checklist
+
+- Build from clean environment; pin versions in build-spec/env files
+- Run smoke tests: start/stop, basic feature path, logs clean of errors
+- Run burn-in: representative workload for 60–120 minutes
+- Verify SLAs: latency targets and success-rate thresholds
+- Capture artifacts: metrics, logs, diffs vs previous baseline
+- Decision: Promote to Stable or roll back
+
+Promotion prompt
+
+```text
+Summarize burn-in results for <baseline>. Did we meet SLAs?
+List defects found, mitigations, and final promote/defer decision with rationale.
+Output a markdown checklist of the promotion steps completed.
+```
+
+---
+
+## 🛡️ Ops Guardrails & Risk Management {#ops-guardrails-risk-management}
+
+Guardrails
+
+- Always keep last Stable kernel/runtime bootable
+- Document every promotion with version, date, rationale, rollback
+- Dry-run integrations by default; explicit approval to send
+- Privacy: local-only processing for sensitive content
+
+Risks → mitigations
+
+- Model/regression: keep version-locked models; canary replay recent tasks
+- Latency spikes: auto-fallback to lighter model; batch heavy jobs off-hours
+- Storage growth: tiered retention; weekly size budgets
+- Auth lapses: alerts + CLI re-auth; file-based fallback where possible
+
+Escalation checklist
+
+- Triage severity (P1–P3), capture minimal repro
+- Collect logs/metrics and recent changes
+- Roll back to last Stable if user impact persists > 30 min (P1)
+
+---
+
+## 🗒️ Docs Update Checklist {#docs-update-checklist}
+
+When behavior changes, update the docs alongside the change.
+
+- Update: feature specs, ops steps, known issues, baselines
+- Verify ToC anchors and internal links (MD051 compliant)
+- Add a drift note: what changed, why, when, who
+- Commit message includes: [docs] prefix + scope + rationale
+
+Quick prompt
+
+```text
+Create a concise docs update for change <X>: affected sections, steps changed,
+and an anchor-safe ToC entry if a new section was added.
+```
+
+---
+
+## 🧠 Model Selection {#model-selection}
 
 This section outlines how to choose the right AI models for your development tasks, including local models via Ollama and cloud-based options like OpenAI.
 
@@ -1066,13 +1270,14 @@ This section outlines how to choose the right AI models for your development tas
 - Benchmark models using the same tasks
 
 **Example:**
+
 ```python
 from langchain.llms import Ollama
 llm = Ollama(model="codellama")
 response = llm("Summarize this meeting transcript")
 ```
 
-### ✅ Recommendations
+### ✅ Recommendations (Models)
 
 - Maintain a `/models` folder with config and usage notes
 - Document model performance and limitations
@@ -1080,7 +1285,7 @@ response = llm("Summarize this meeting transcript")
 
 ---
 
-## 🧩 AI Agent Design
+## 🧩 AI Agent Design {#ai-agent-design}
 
 This section outlines strategies and architecture for designing AI agents using local models, LangChain, and VS Code integration. It includes modular design principles, tool chaining, and memory management.
 
@@ -1109,11 +1314,13 @@ This section outlines strategies and architecture for designing AI agents using 
 ### Architecture Overview
 
 Use LangChain to:
+
 - Chain tools and models together
 - Define agent behavior and responses
 - Manage context and memory
 
 **Example:**
+
 ```python
 from langchain.agents import initialize_agent
 from langchain.llms import Ollama
@@ -1128,7 +1335,7 @@ agent = initialize_agent(tools, llm, agent_type="zero-shot")
 - Use terminal commands or chat interface
 - Enable prompt-driven workflows and automation
 
-### Recommendations
+### Recommendations (Agents)
 
 - Maintain a `/agents` folder with agent configs and modules
 - Document each tool and memory strategy
@@ -1136,7 +1343,7 @@ agent = initialize_agent(tools, llm, agent_type="zero-shot")
 
 ---
 
-## 📓 Learning Journal
+## 📓 Learning Journal {#learning-journal}
 
 This section is a personal log of discoveries, challenges, and reflections throughout the AI development journey. It helps track growth, document insights, and revisit key learnings.
 
@@ -1150,6 +1357,7 @@ This section is a personal log of discoveries, challenges, and reflections throu
 ### Entry Format
 
 Each entry includes:
+
 - **Date**
 - **Topic or Task**
 - **What I Learned**
@@ -1159,21 +1367,28 @@ Each entry includes:
 ### Sample Entry
 
 #### Date: 2025-09-21
+
 #### Topic: Setting Up VS Code with Copilot Pro
 
 **What I Learned:**
+
+
 - How to install and configure GitHub Copilot Pro
 - How to use inline suggestions and Copilot Chat
 
 **Challenges Faced:**
+
+
 - Initial confusion with SSH Remote setup
 - Needed to adjust VS Code settings for optimal performance
 
 **Next Steps:**
+
+
 - Document SSH setup in environment section
 - Explore Copilot Labs features
 
-### Recommendations
+### Recommendations (Learning Journal)
 
 - Maintain entries in chronological order
 - Use tags or categories for quick reference
@@ -1181,7 +1396,7 @@ Each entry includes:
 
 ---
 
-## 📚 Prompt Library
+## 📚 Prompt Library {#prompt-library}
 
 All prompts used in this manual, organized for quick reference:
 
@@ -1389,8 +1604,9 @@ All prompts used in this manual, organized for quick reference:
     - Disk cleanup and space optimization
     - Performance monitoring and tuning
     - Security checks and hardening
-    Format as a markdown guide with explanations for each command.
+  Format as a markdown guide with explanations for each command.
 ```
+
 ---
 
-**End of Master Sheet**
+## End of Master Sheet
