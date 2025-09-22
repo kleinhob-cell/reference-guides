@@ -43,24 +43,24 @@ Agile principles inform planning and delivery, but ceremonies and tooling are mi
 
 ## 📖 Table of Contents
 
-- [🎯 Purpose](#purpose)
-- [🧭 Development Environment](#development-environment)
-- [🛠️ Development Style](#development-style)
-- [📦 Initial Projects](#initial-projects)
-- [📚 Manual Format](#manual-format)
-- [🔄 Workflow Philosophy](#workflow-philosophy)
-- [⚙️ Environment Setup](#environment-setup)
-- [🧰 New to Ubuntu](#new-to-ubuntu)
-- [🗂️ Project Planning](#project-planning)
-- [💬 Prompting Strategies](#prompting-strategies)
-- [🧩 Low-Code Patterns](#low-code-patterns)
-- [🧪 Testing and Debugging](#testing-and-debugging)
-- [📝 Coding with Copilot](#coding-with-copilot)
-- [🚀 Deployment and Ops](#deployment-and-ops)
-- [🧠 Model Selection](#model-selection)
-- [🧩 AI Agent Design](#ai-agent-design)
-- [📓 Learning Journal](#learning-journal)
-- [📚 Prompt Library](#prompt-library)
+- [🎯 Purpose](#-purpose)
+- [🧭 Development Environment](#-development-environment)
+- [🛠️ Development Style](#-development-style)
+- [📦 Initial Projects](#-initial-projects)
+- [📚 Manual Format](#-manual-format)
+- [🔄 Workflow Philosophy](#-workflow-philosophy)
+- [⚙️ Environment Setup](#-environment-setup)
+- [🧰 New to Ubuntu](#-new-to-ubuntu)
+- [🗂️ Project Planning](#-project-planning)
+- [💬 Prompting Strategies](#-prompting-strategies)
+- [🧩 Low-Code Patterns](#-low-code-patterns)
+- [🧪 Testing and Debugging](#-testing-and-debugging)
+- [📝 Coding with Copilot](#-coding-with-copilot)
+- [🚀 Deployment and Ops](#-deployment-and-ops)
+- [🧠 Model Selection](#-model-selection)
+- [🧩 AI Agent Design](#-ai-agent-design)
+- [📓 Learning Journal](#-learning-journal)
+- [📚 Prompt Library](#-prompt-library)
 
 ---
 
@@ -871,9 +871,9 @@ Use Copilot Chat to:
 
 **Example Prompts:**
 ```
-"Why is this function returning None?"
-"Fix this IndexError in the loop."
-"Refactor this to handle empty input gracefully."
+"Explain what this function does."
+"Refactor this to use async/await."
+"Generate unit tests for this module."
 ```
 
 ### 🧰 Recommended Tools
@@ -1360,7 +1360,8 @@ All prompts used in this manual, organized for quick reference:
       5. **Security & Compliance**: Outline any security measures or compliance requirements.
       6. **Testing Expectations**: Describe required tests and coverage goals.
       7. **Documentation Needs**: Note any documentation or usage examples required.
-      Follow this structure and be as specific as possible to ensure a
+      8. **Acceptance Criteria**: Define clear, testable conditions for feature completion, including edge cases and non-functional requirements.
+      Follow this structure and be as specific as possible to ensure a comprehensive and actionable feature specification.
 - name: environment-verify
   description: Verify software/hardware environment and compare to baseline
   model: codellama13b
