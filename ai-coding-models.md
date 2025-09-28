@@ -309,6 +309,7 @@ ollama list | awk 'NR>1 {print $1}' | xargs -n1 ollama rm
 ---
 
 ## Continue config.yaml (Reference)
+
 ```bash
 # Continue VS Code Extension Config (v1.2.0 compatible)
 name: brent-local-ollama

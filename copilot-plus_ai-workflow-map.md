@@ -1,10 +1,11 @@
 # 🧠 Copilot+ AI Workflow Map  
-**Model Routing • Prompt Roles • Assistant Integration**
 
----
+## Model Routing • Prompt Roles • Assistant Integration
 
 ## 📑 Table of Contents
+
 - [🧠 Copilot+ AI Workflow Map](#-copilot-ai-workflow-map)
+  - [Model Routing • Prompt Roles • Assistant Integration](#model-routing--prompt-roles--assistant-integration)
   - [📑 Table of Contents](#-table-of-contents)
   - [📄 Overview](#-overview)
   - [🔀 Model Routing Summary](#-model-routing-summary)
@@ -19,25 +20,25 @@
     - [⚙️ Full Feature Pipeline Usage](#️-full-feature-pipeline-usage)
     - [Purpose](#purpose)
     - [When to Use](#when-to-use)
-    - [How to Run in Continue](#how-to-run-in-continue)
     - [Example Input](#example-input)
     - [Example Output Structure](#example-output-structure)
-    - [How to Run in Continue](#how-to-run-in-continue-1)
-    - [Example Input](#example-input-1)
-  - [⚠️ Removed Models (Audit Notes)](#️-removed-models-audit-notes)
 
 ---
 
 ## 📄 Overview
+
 This workflow map documents how prompts, models, and assistant roles are routed in the current Ollama‑based Copilot+ stack.
 
 It is designed to:
+
 - **Ensure reproducibility** — every model and prompt pairing is intentional, documented, and can be re‑run by future maintainers.
+  
 - **Support meeting‑assistant integration** — enabling a smooth flow from discussion → specification → implementation → validation.
 - **Provide clear routing** — so anyone can see which model is best suited for a given task without guesswork.
 - **Align with hardware constraints** — optimized for the RX 7900 XTX (24 GB VRAM) and reproducible Linux environments.
 
 The map covers:
+
 - **Model Routing Summary** — which model is default for each role.
 - **Prompt → Model Mapping** — explicit assignments for all prompts, including the spec‑to‑code pipeline.
 - **Installed Model Comparison** — VRAM, context length, strengths, weaknesses, and best‑fit scenarios.
@@ -227,7 +228,9 @@ If you’re starting from scratch, use `draft-feature-spec` to build it interact
 ### ⚙️ Full Feature Pipeline Usage
 
 ### Purpose
+
 The `full-feature-pipeline` prompt is designed to take a **finalized, implementation‑ready feature specification** and produce:
+
 1. Production‑ready code.
 2. Self‑reviewed corrections for correctness, syntax, edge cases, and security.
 3. Comprehensive pytest‑style unit tests.
@@ -238,6 +241,7 @@ This ensures that a single run moves a feature from **spec → validated code �
 ---
 
 ### When to Use
+
 - The feature specification has been **approved** and locked (see [Spec Prep](#-spec-prep--preparing-a-high-quality-feature-specification)).
 - All functional, technical, and compliance requirements are documented.
 - You want a **single, reproducible run** that outputs code, tests, and optimizations in a consistent format.
@@ -245,25 +249,8 @@ This ensures that a single run moves a feature from **spec → validated code �
 
 ---
 
-### How to Run in Continue
-1. Select the `full-feature-pipeline` prompt.
-2. Paste the **finalized feature specification** into the input field.
-3. Optionally include:
-   - Relevant codebase context (e.g., existing modules, APIs).
-   - Any architectural constraints discussed in meetings.
-4. Run the prompt — the model will:
-   - Generate the initial implementation.
-   - Self‑review and correct issues.
-   - Produce pytest‑style tests.
-   - Apply performance optimizations.
-5. Review the output before committing:
-   - Validate correctness in your local environment.
-   - Run the generated tests in CI.
-   - Document any deviations from the spec.
-
----
-
 ### Example Input
+
 ```markdown
 ## Feature Overview
 Purpose: Allow meeting assistant to export summaries directly to Confluence.
@@ -306,6 +293,7 @@ Changelog: Add entry for new export feature.
 ---
 
 ### Example Output Structure
+
 ```python
 # Final Optimized Code
 # src/confluence_exporter.py
@@ -335,52 +323,11 @@ from unittest.mock import patch
 
 **Tip:**  
 For maximum reproducibility, commit:
+
 - The **exact prompt text** used.
 - The **spec** provided as input.
 - The **generated output** (code + tests + summary).
 
 This allows future maintainers to re‑run the pipeline and verify results.
 
-
 ---
-
-### How to Run in Continue
-1. Select the `full-feature-pipeline` prompt.
-2. Paste the **finalized feature specification** into the input field.
-3. Optionally include:
-   - Relevant codebase context (e.g., existing modules, APIs).
-   - Any architectural constraints discussed in meetings.
-4. Run the prompt — the model will:
-   - Generate the initial implementation.
-   - Self‑review and correct issues.
-   - Produce pytest‑style tests.
-   - Apply performance optimizations.
-5. Review the output before committing:
-   - Validate correctness in your local environment.
-   - Run the generated tests in CI.
-   - Document any deviations from the spec.
-
----
-
-### Example Input
-
----
-
-## ⚠️ Removed Models (Audit Notes)
-
-The following models were removed during the latest stack audit to reduce redundancy, free VRAM/disk space, and improve routing clarity.  
-Each removal was benchmark‑driven and documented so future maintainers can reinstate a model if a workflow gap emerges.
-
-| Model Name / Tag       | Reason for Removal | Replacement / Reroute |
-|------------------------|--------------------|-----------------------|
-| `codellama7b`          | Redundant with `codellama13b` for build tasks; lower reasoning depth | `codellama13b` |
-| `wizardcoder13b`       | Redundant with `codellama13b` in build/validate role | `codellama13b` |
-| `phi3`                 | Lower accuracy in structured output tasks compared to `qwen3_14b` | `qwen3_14b` |
-
-**Audit Notes:**
-- All removals were validated against benchmark tasks for speed, accuracy, and fit to role.
-- Disk space savings: ~38 GB.
-- VRAM routing is now cleaner — no overlapping models competing for the same role.
-- If reinstating a model, update both:
-  1. **Prompt → Model Mapping** table.
-  2. **Installed Model Comparison** section.
