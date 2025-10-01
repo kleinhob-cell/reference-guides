@@ -1393,214 +1393,91 @@ Each entry includes:
 
 ## 📚 Prompt Library {#prompt-library}
 
-All prompts used in this manual, organized for quick reference:
+Source of truth for all operational and engineering prompts now lives in the dedicated prompts system. To eliminate drift, this playbook no longer embeds full prompt bodies (which previously duplicated and fell out of sync with evolving governance). Instead, use this section as an access map and workflow guide.
 
-```yaml
-- name: build-feature
-  description: Generate production‑ready code from a natural language spec
-  model: codellama13b
-  prompt: |
-    You are an expert software engineer. Based on the following specification,
-    generate complete, production‑ready code.
-    - Include docstrings and inline comments.
-    - Follow Python best practices (PEP 8) unless otherwise specified.
-    - If the spec is ambiguous, ask clarifying questions before coding.
-    - Output only the code block unless explicitly asked for explanation.
-- name: build-and-validate
-  description: Generate code and then self‑review it for correctness
-  model: codellama13b
-  prompt: |
-    Step 1: Generate the requested code based on the specification.
-    Step 2: Review your own output for:
-      - Logical correctness
-      - Syntax errors
-      - Missing edge cases
-      - Security vulnerabilities
-    Step 3: Provide the corrected final version.
-    Output the reviewed code only, unless explicitly asked for the review notes.
-- name: refactor-for-clarity
-  description: Improve readability, maintainability, and structure
-  model: gemma3_12b
-  prompt: |
-    Refactor the provided code to:
-      - Improve naming and structure
-      - Reduce complexity
-      - Add docstrings and inline comments
-      - Preserve all functionality
-    Output only the refactored code.
-- name: add-tests
-  description: Generate unit tests for existing code
-  model: deepseekcoder6.7b
-  prompt: |
-    Write comprehensive unit tests for the provided code.
-    - Cover normal, edge, and error cases.
-    - Use pytest style unless otherwise specified.
-    - Include fixtures if needed.
-    Output only the test code.
-- name: security-review
-  description: Audit code for vulnerabilities and suggest fixes
-  model: codellama13b
-  prompt: |
-    Review the provided code for:
-      - Security vulnerabilities
-      - Insecure coding patterns
-      - Missing validation or sanitization
-    Suggest specific fixes and explain why they are needed.
-- name: optimize-performance
-  description: Improve efficiency and speed of the code
-  model: deepseekcoder6.7b
-  prompt: |
-    Analyze the provided code for performance bottlenecks.
-    Suggest and implement optimizations to improve speed and reduce resource
-    usage.
-    Ensure the optimized code maintains the same functionality.
-    Output only the optimized code.
-- name: explain-code
-  description: Provide a detailed explanation of the code's functionality
-  model: gemma3_12b
-  prompt: |
-    Explain the functionality of the provided code in detail.
-    - Describe the purpose of the code.
-    - Explain how it works step-by-step.
-    - Highlight any important design decisions or patterns used.
-    Output the explanation in clear, concise language.
-- name: translate-language
-  description: Convert code from one programming language to another
-  model: codellama13b
-  prompt: |
-    Translate the provided code from its current programming language to the
-    specified target language.
-    - Preserve the original functionality.
-    - Follow best practices and idioms of the target language.
-    - Include comments and docstrings as appropriate.
-    Output only the translated code.
-- name: generate-documentation
-  description: Create comprehensive documentation for the codebase
-  model: codellama13b
-  prompt: |
-    Generate detailed documentation for the provided code.
-    - Include an overview of the code's purpose and functionality.
-    - Document key classes, functions, and modules.
-    - Provide usage examples where applicable.
-    Output the documentation in markdown format.
-- name: debug-code
-  description: Identify and fix bugs in the provided code
-  model: deepseekcoder6.7b
-  prompt: |
-    Analyze the provided code to identify any bugs or issues.
-    Suggest specific fixes and implement them.
-    Ensure the fixed code maintains the same functionality.
-    Output only the corrected code.
-- name: code-review
-  description: Review code for quality, style, and best practices
-  model: codellama13b
-  prompt: |
-    Review the provided code for:
-      - Code quality
-      - Adherence to style guidelines
-      - Use of best practices
-    Suggest specific improvements and explain why they are needed.
-- name: integrate-library
-  description: Add and configure a new library or framework in the codebase
-  model: codellama13b
-  prompt: |
-    Integrate the specified library or framework into the provided codebase.
-    - Add necessary import statements.
-    - Configure the library as needed.
-    - Update existing code to utilize the new library.
-    Output only the updated code.
-- name: full-feature-pipeline
-  description: Build, validate, test, and optimize a feature in one run
-  model: codellama13b
-  prompt: |
-    You are an expert software engineer. Follow these steps:
-    1. Generate production-ready code from the given specification.
-    2. Review your own output for correctness, syntax errors, missing edge cases, and security vulnerabilities. Correct any issues.
-    3. Generate comprehensive pytest-style unit tests for the corrected code.
-    4. Optimize the corrected code for performance without changing functionality.
-    Output in this order:
-      - Final optimized code
-      - Unit tests
-      - Brief summary of changes and optimizations
-- name: draft-feature-spec
-  description: Interactive Q&A to build a complete feature specification
-  model: llama3
-  prompt: |
-    You are an expert product engineer helping to create a complete, high-quality feature specification.
-    Ask me structured questions in sequence to gather:
-      1. Feature overview (purpose, user story, scope)
-      2. Functional requirements (inputs, outputs, core logic, edge cases)
-      3. Technical context (language, framework, dependencies, environment, performance targets)
-      4. Data & storage details (schema, persistence, validation)
-      5. Security & compliance requirements
-      6. Testing expectations
-      7. Documentation needs
-      8. High-level acceptance criteria: list testable outcomes and edge case coverage for feature completion.
-    After gathering all answers, output a clean, copy-ready Markdown specification following the Feature Specification Guide format.
-- name: user-stories-detailed
-  description: Break down a feature into detailed user stories with description and acceptance criteria
-  model: llama3
-  prompt: |
-    You are an expert product manager.
-    Given a feature description, break it down into user stories in the format:
-    - As a <user type>, I want to <action/goal>, so that <value/benefit>.
-    For each user story, include:
-      - A brief Description (context, rationale, background)
-      - Detailed Acceptance Criteria (checklist covering functional, edge case, and non-functional requirements)
-    Output as a markdown table and AC checklist.
-- name: refine-feature-spec
-  description: Review and improve an existing feature specification
-  model: llama3
-  prompt: |
-    You are an expert product engineer and technical writer.
-    Review the provided feature specification for:
-      - Missing or unclear details
-      - Ambiguities that could cause incorrect implementation
-      - Opportunities to improve clarity, completeness, and testability
-    Suggest specific additions or changes, then output the improved specification in clean Markdown.
-- name: feature-specification-guide
-  description: Guidelines for writing high-quality feature specifications
-  model: llama3
-  prompt: |
-    Use the following guidelines to write high-quality feature specifications:
-      1. **Feature Overview**: Start with a clear purpose, user story, and scope.
-      2. **Functional Requirements**: Detail inputs, outputs, core logic, and edge cases.
-      3. **Technical Context**: Specify language, framework, dependencies, environment, and performance targets.
-      4. **Data & Storage**: Define data schema, persistence, and validation needs.
-      5. **Security & Compliance**: Outline any security measures or compliance requirements.
-      6. **Testing Expectations**: Describe required tests and coverage goals.
-      7. **Documentation Needs**: Note any documentation or usage examples required.
-      8. **Acceptance Criteria**: Define clear, testable conditions for feature completion, including edge cases and non-functional requirements.
-      Follow this structure and be as specific as possible to ensure a comprehensive and actionable feature specification.
-- name: environment-verify
-  description: Verify software/hardware environment and compare to baseline
-  model: codellama13b
-  prompt: |
-    Verify the current environment setup by running and capturing outputs for:
-    - uname -r
-    - rocminfo | grep -i gfx
-    - clinfo | grep -i 'gfx\|Device'
-    - pip show ctranslate2 faster-whisper
-    Summarize differences from previous baseline and flag any non-conformant results.
-    Output a markdown table with captured outputs and dates.
-- name: baseline-troubleshoot
-  description: Troubleshoot environment setup against baseline specs
-  model: codellama13b
-  prompt: |
-    Diagnose any issues with the current environment setup, referencing the baseline specs and captured outputs.
-    Identify mismatches, missing dependencies, or known issues for the OS, kernel, GPU, ROCm, and primary packages.
-    Recommend step-by-step fixes.
-- name: ubuntu-system-maintenance
-  description: Generate commands for Ubuntu system maintenance and optimization
-  model: codellama13b
-  prompt: |
-    Generate a comprehensive list of commands for Ubuntu system maintenance:
-    - System updates and package management
-    - Disk cleanup and space optimization
-    - Performance monitoring and tuning
-    - Security checks and hardening
-  Format as a markdown guide with explanations for each command.
-```
+Authoritative assets:
+
+1. `prompts/manifest.yml` – governance + versioned registry (models, tones, categories, anchors)
+2. `prompts/prompt-library.md` – human‑readable rendered library (deep links per slug)
+3. `prompts/categories/*.md` – category‑scoped prompt source (anchors referenced by the manifest)
+4. `prompts/GLOBAL_GUARDRAILS.md` – global behavioral guardrails applied across prompts
+
+### Why this change
+
+- Prevent schema/model naming drift (legacy entries here used older model labels e.g. `codellama13b` vs current `code-13b`).
+- Centralize lifecycle controls (deprecations, version bumps, tone/model vocab) in one validated pipeline.
+- Reduce maintenance overhead while keeping the playbook consumable.
+
+### Quick Usage Workflow
+
+1. Find needed capability (e.g. refactor, tests, planning) in the table below.
+2. Open `prompt-library.md` and jump to the slug anchor (slug appears as a heading; use VS Code search `# <slug>`).
+3. (Optional) Inspect manifest entry for version / model / tone before invocation.
+4. Invoke in Copilot Chat or your agent wrapper; include any required context (code, spec, transcript, etc.).
+5. Record improvements or issues; if proposing a change, follow “Adding a new prompt” in `sections/13-adding-new-prompt.md` (anchor may differ slightly; see repo).
+
+### Governance Snapshot (from manifest)
+
+Allowed Models: `code-13b`, `code-6.7b`, `general-12b`, `general`
+
+Allowed Tones (selected): technical, coaching, authoritative, concise, educational, socratic, analytical, operational, diagnostic, critical, authoring
+
+### Prompt Index (current manifest)
+
+| Slug | Version | Category | Model | Tone | Anchor (category file) |
+|------|---------|----------|-------|------|------------------------|
+| build-feature | 2.0.0 | code-generation | code-13b | technical | build-feature-v200 |
+| build-and-validate | 1.0.0 | code-generation | code-13b | technical | build-and-validate-v100 |
+| full-feature-pipeline | 1.0.0 | code-generation | code-13b | technical | full-feature-pipeline-v100 |
+| translate-language | 1.0.0 | code-generation | code-13b | technical | translate-language-v100 |
+| integrate-library | 1.1.0 | code-generation | code-13b | technical | integrate-library-v110 |
+| refactor-for-clarity | 2.0.0 | refactor | general-12b | coaching | refactor-for-clarity-v200 |
+| code-review | 2.0.0 | refactor | code-13b | authoritative | code-review-v200 |
+| add-tests | 1.1.0 | testing | code-6.7b | concise | add-tests-v110 |
+| debug-code | 1.0.0 | debugging | code-6.7b | coaching | debug-code-v100 |
+| security-review | 1.2.0 | security | code-13b | authoritative | security-review-v120 |
+| optimize-performance | 1.1.0 | performance | code-6.7b | authoritative | optimize-performance-v110 |
+| explain-code | 1.0.0 | documentation | general-12b | educational | explain-code-v100 |
+| generate-documentation | 1.0.0 | documentation | code-13b | technical | generate-documentation-v100 |
+| draft-feature-spec | 2.0.0 | planning-spec | general | socratic | draft-feature-spec-v200 |
+| user-stories-detailed | 1.0.0 | planning-spec | general | analytical | user-stories-detailed-v100 |
+| refine-feature-spec | 1.0.0 | planning-spec | general | analytical | refine-feature-spec-v100 |
+| feature-specification-guide | 1.0.0 | planning-spec | general | educational | feature-specification-guide-v100 |
+| opportunity-eval | 1.0.0 | product-management | general | analytical | opportunity-eval-v100 |
+| feature-rice-score | 1.0.0 | product-management | general | analytical | feature-rice-score-v100 |
+| risk-assumption-matrix | 1.0.0 | product-management | general | analytical | risk-assumption-matrix-v100 |
+| acceptance-criteria-audit | 1.0.0 | product-management | general | analytical | acceptance-criteria-audit-v100 |
+| release-slice-planner | 1.0.0 | product-management | general | analytical | release-slice-planner-v100 |
+| decision-matrix | 1.0.0 | decision-frameworks | general | analytical | decision-matrix-v100 |
+| burn-in-promotion-summary | 1.0.0 | ops | code-13b | operational | burn-in-promotion-summary-v100 |
+| environment-verify | 1.1.0 | environment | code-13b | diagnostic | environment-verify-v110 |
+| baseline-troubleshoot | 1.0.0 | environment | code-13b | diagnostic | baseline-troubleshoot-v100 |
+| ubuntu-system-maintenance | 1.0.0 | environment | code-13b | operational | ubuntu-system-maintenance-v100 |
+| meta:review-improve | 1.0.0 | meta | general-12b | critical | metareview-improve-v100 |
+| meta:create-new-prompt | 1.0.0 | meta | general | authoring | metacreate-new-prompt-v100 |
+
+Legend: Anchor column matches `anchor_id` in `manifest.yml` (useful for direct deep linking or validation tooling).
+
+### Adding or Updating a Prompt (summary)
+
+1. Draft change (or new prompt) locally in the appropriate `categories/*.md` file.
+2. Update `manifest.yml` (increment version semver: MAJOR for breaking schema/intent, MINOR for additive improvements, PATCH for small wording/safety tweaks).
+3. Run `scripts/validate_prompt_manifest.py` (if available) or associated validation script.
+4. Regenerate exports (`scripts/export_prompts.py`, `generate_snippets.py`, `export_embeddings.py` as needed).
+5. Commit with message prefix `[prompts]` including slug + version bump.
+
+For full procedure and guardrails see: `prompts/sections/13-adding-new-prompt.md` and `prompts/sections/12-deprecations-migration.md`.
+
+### Invocation Tips
+
+- Always paste only the relevant code/spec chunk + the chosen prompt body (where needed) to minimize context noise.
+- For iterative refinement, chain: build-feature → code-review → refactor-for-clarity → add-tests.
+- Use diagnostic tones (`environment-verify`, `baseline-troubleshoot`) only after capturing fresh command outputs.
+- For complex shipping flows, pair `burn-in-promotion-summary` with decision-framework prompts (e.g., `decision-matrix`).
+
+### Drift Policy
+
+If this summary table differs from `manifest.yml`, treat the manifest as correct and open a doc sync issue tagged `docs:prompt-library`.
 
 ---
 
